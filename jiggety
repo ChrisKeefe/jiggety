@@ -4,7 +4,8 @@
 # Create src directory
 if [ -d ~/src ]; then
   printf '** WARNING: This system already has a ~/src directory. **\n'
-  printf 'Continuing may break stuff. Sure you want to continue? [y/n]'
+  printf 'It may have been configured already. Continuing may break stuff. '
+  printf 'Are you sure you want to continue? [y/n]'
   read CONTINUE
   if [ $CONTINUE != 'y' ]; then
     return
