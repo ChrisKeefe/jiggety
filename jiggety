@@ -45,3 +45,5 @@ fi
 # append .bash_aliases call to .bashrc
 printf '\n# added by jiggety:\n' >> ~/.bashrc
 printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_aliases' 'fi' >> ~/.bashrc
+
+# Configure printers?
