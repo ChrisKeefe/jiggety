@@ -20,7 +20,8 @@ fi
 # Install R and relevant packages (ggplot2, dplyr, etc)
 # Install firefox, fb-blocker plugin, chrome
 
-
+# edit .bashrc PS1 variable to display git branch
+sed -i 's/chroot)}$/chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
 
 ## Add aliases to .bashrc
 # TODO Do I need to CHMOD jiggety for security reasons?
@@ -30,10 +31,10 @@ if [ ! -f ~/.bash_aliases ]; then
   cat ~/src/jiggety/aliases >> ~/.bash_aliases
 fi
 
-
 # append .bash_aliases call to .bashrc
 printf '\n# added by jiggety:\n' >> ~/.bashrc
 printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_aliases' 'fi' >> ~/.bashrc
 
-
 # Configure printers?
+
+
