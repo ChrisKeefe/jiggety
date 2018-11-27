@@ -46,4 +46,5 @@ fi
 printf '\n# added by jiggety:\n' >> ~/.bashrc
 printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_aliases' 'fi' >> ~/.bashrc
 
+# Generate SSH Key, clone all gitHub repos
 # Configure printers?
