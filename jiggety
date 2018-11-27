@@ -34,6 +34,16 @@ cat << EOT >> ~/.gitconfig
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 EOT
 
+# add git aliases to .gitconfig
+cat << EOT >> ~/.gitconfig
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+EOT
+
 ## Add aliases to .bashrc
 # TODO Do I need to CHMOD jiggety for security reasons?
 # NOTE: must be non-root
