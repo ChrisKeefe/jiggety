@@ -9,6 +9,11 @@ alias ....='cd ../../..'
 alias ...='cd ../..'
 alias ..='cd ..'
 
+alias .....l='cd ../../../..; l'
+alias ....l='cd ../../..; l'
+alias ...l='cd ../..; l'
+alias ..l='cd ..; l'
+
 # "spell-checker aliases
 alias cd..="cd .."
 
