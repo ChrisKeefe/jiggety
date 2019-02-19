@@ -14,11 +14,9 @@ else
   mkdir ~/src
 fi
 
-
-# Install MiniConda, QIIME2, Atom, Atom Packages, flake8, git
-# clone common QIIME repos, add relevant git remotes
-# Install R and relevant packages (ggplot2, dplyr, etc)
-# Install firefox, fb-blocker plugin, chrome
+# Prompt user for input: Do you want to update your bash and git aliases and add git branch to CLI
+# Prompt user for input: Do you want to install all software?
+# store these to variables early, then make decisions for the user as script progresses.
 
 # edit .bashrc PS1 variable to display git branch
 sed -i 's/chroot)}$/chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
@@ -45,6 +43,10 @@ fi
 printf '\n# added by jiggety:\n' >> ~/.bashrc
 printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_aliases' 'fi' >> ~/.bashrc
 
+# Install MiniConda, QIIME2, Atom, Atom Packages, flake8, git
+# clone common QIIME repos, add relevant git remotes
+# Install R and relevant packages (ggplot2, dplyr, etc)
+# Install firefox, fb-blocker plugin, chrome
 
 # Generate SSH Key, clone all gitHub repos
 
