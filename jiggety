@@ -19,7 +19,7 @@ fi
 # store these to variables early, then make decisions for the user as script progresses.
 
 # edit .bashrc PS1 variable to display git branch
-sed -i 's/chroot)}$/chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
+sed -i 's/($debian_chroot)}/($debian_chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
 
 # add git aliases to .gitconfig
 cat << EOT >> ~/.gitconfig
