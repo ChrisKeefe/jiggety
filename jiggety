@@ -16,9 +16,18 @@ fi
 
 # Prompt user for input: Do you want to update your bash and git aliases and add git branch to CLI
 # Prompt user for input: Do you want to install all software?
+<<<<<<< HEAD
 # store these to variables early, then make decisions for the user as script progresses.
 
 # edit .bashrc PS1 variable to display git branch
+=======
+# IF YES, run fileInstallation, or parts of it?
+# store these to variables early, then make decisions for the user as script progresses.
+
+# download and source supporting file, then edit .bashrc PS1 variable to display git branch
+curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
+sed -i '1isource ~/.git-prompt.sh\n' ~/.bashrc
+>>>>>>> master
 sed -i 's/($debian_chroot)}/($debian_chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
 
 # add git aliases to .gitconfig
@@ -42,6 +51,7 @@ fi
 # append .bash_aliases call to .bashrc
 printf '\n# added by jiggety:\n' >> ~/.bashrc
 printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_aliases' 'fi' >> ~/.bashrc
+<<<<<<< HEAD
 
 # Install MiniConda, QIIME2, Atom, Atom Packages, flake8, git
 # clone common QIIME repos, add relevant git remotes
@@ -51,3 +61,5 @@ printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_alia
 # Generate SSH Key, clone all gitHub repos
 
 # Configure printers?
+=======
+>>>>>>> master
