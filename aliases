@@ -29,6 +29,9 @@ mkcd() {
         fi
 }
 
+# log into monsoon
+alias limon='ssh crk239@monsoon.hpc.nau.edu'
+
 # launch q2-dev environment, navigate to qiime2 folder or repo, make dev, display available branches
 dev () {
     source activate q2-dev
