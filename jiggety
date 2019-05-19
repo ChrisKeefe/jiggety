@@ -19,7 +19,6 @@ fi
 # IF YES, run fileInstallation, or parts of it?
 # store these to variables early, then make decisions for the user as script progresses.
 
-<<<<<<< HEAD
 # download and source supporting file, then edit .bashrc PS1 variable to display git branch
 curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
 sed -i '1isource ~/.git-prompt.sh\n' ~/.bashrc
@@ -34,9 +33,6 @@ cat << EOT >> ~/.gitconfig
   br = branch
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 EOT
-
-# edit .bashrc PS1 variable to display git branch
-sed -i 's/($debian_chroot)}/($debian_chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
 
 # add git aliases to .gitconfig
 cat << EOT >> ~/.gitconfig
