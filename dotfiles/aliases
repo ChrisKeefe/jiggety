@@ -42,6 +42,12 @@ alias conlt='conda activate q2-19.4'
 alias limon='ssh crk239@monsoon.hpc.nau.edu'
 alias licef='ssh crk239@linux.cefns.nau.edu'
 
+# tmux aliases
+alias ta='tmux attach'
+alias tls='tmux ls'
+alias tat='tmux attach -t'
+alias tns='tmux new-session -s'
+
 # Misc Applications
 alias jn='jupyter notebook'
 alias vpn='sudo openconnect -b nauvpn.nau.edu'
