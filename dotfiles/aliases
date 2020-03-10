@@ -21,6 +21,9 @@ alias cd..="cd .."
 # cd into folder and display contents
 cdl () { cd $1; l; }
 
+# open a file with default program
+op () { 'xdg-open' $1; }
+
 # make dir and cd into it
 mkcd() {
         if [ $# != 1 ]; then
@@ -32,13 +35,16 @@ mkcd() {
 
 # Conda environment management
 alias condeac='conda deactivate'
+# TODO: replace conlt env name with variable generated in cloneAll.sh
 alias conlt='conda activate q2-19.4'
 
-# log into monsoon
+# log into monsoon, CEFNS linux server
 alias limon='ssh crk239@monsoon.hpc.nau.edu'
+alias licef='ssh crk239@linux.cefns.nau.edu'
 
 # Misc Applications
 alias jn='jupyter notebook'
+alias vpn='sudo openconnect -b nauvpn.nau.edu'
 
 # launch q2-dev environment, navigate to qiime2 folder or repo, make dev, display available branches
 dev () {
@@ -62,8 +68,6 @@ dev () {
     fi
 }
 
-alias woo='fortune'
-
 # Find out what is taking so much space on your drives!
 # c/o gyaresu on SE Serverfault
 alias diskspace="du -S | sort -n -r |more"
@@ -74,3 +78,16 @@ alias folders="find . -maxdepth 1 -type d -print | xargs du -sk | sort -rn"
 # Add an "alert" alias to notify on completion of long-running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+
+###################################  480 crap ########################################
+
+480tar () { tar -czvf Sim_0${1}_390762.tar.gz *.c *.h *_mf readme.txt; }
+
+
+###################################  499 crap ########################################
+alias ros_new='sudo docker run -it -p --rm 6080:80 nxtruong/f110sim'
+alias ros='sudo docker start eager_merkle; sudo docker attach eager_merkle;'
+
+###################################  386 crap ########################################
+alias studio='~/android-studio/bin/studio.sh'
