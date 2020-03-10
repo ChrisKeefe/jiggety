@@ -34,6 +34,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " --------Actual Plugin Installs----------------------
 Plugin 'morhetz/gruvbox'
+Plugin 'scrooloose/nerdtree'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -59,7 +60,20 @@ let g:gruvbox_contrast_dark = 'hard'
 syntax on
 " colo murphy   " backup color scheme
 
+" ----------Keymaps/Aliases---------------------------
+inoremap jj <Esc>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
-" ----------Keymaps/Aliases----------------------------
-inoremap jk <Esc>
-inoremap kj <Esc>
+set splitbelow
+set splitright
+
+" Sets linenumber bar to line diff from current line
+set relativenumber
+
+" Makes system clipboard the default for y and p
+set clipboard=unnamedplus
+" Makes middle mouse-button clipboard the default for y and p
+" set clipboard=unnamed
