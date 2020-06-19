@@ -28,6 +28,7 @@ apt install jq -y
 apt install xclip -y
 
 # Optional software:
+apt install tree
 apt install dconf-editor
 apt install build-essential -y
 apt install chromium-browser -y
