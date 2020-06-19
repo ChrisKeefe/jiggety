@@ -10,6 +10,7 @@ set -e
 # deal with passwording: https://stackoverflow.com/a/11955369
 
 read -p "Keep it simple, or try to install yEd? [simple/yed] " YED
+read -p "Install LaTeX and Beamer Poster dependencies? [y/n] " LaTeX
 
 sudo -s -- <<EOF
 # enter password
@@ -48,8 +49,13 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.viM
 # Install VSCode
 snap install code --classic
 
-# Install LaTeX
-apt install texlive-latex-recommended texlive-latex-base texlive-latex-extra texmaker -y
+if [[ ${LaTeX} = "y" ]]; then
+	# Install LaTeX
+	apt install texlive-latex-recommended texlive-latex-base texlive-latex-extra texmaker -y
+	# install beamer dependencies
+	apt install texlive-luatex qrencode
+fi
+
 timeshift --create --comments "bulk software install"
 EOF
 
