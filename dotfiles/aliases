@@ -11,7 +11,7 @@ alias ...='cd ../..'
 alias ..='cd ..'
 
 alias .....l='cd ../../../..; l'
-alias ....l='cd ../../..; l'
+alisas ....l='cd ../../..; l'
 alias ...l='cd ../..; l'
 alias ..l='cd ..; l'
 
@@ -86,14 +86,5 @@ alias folders="find . -maxdepth 1 -type d -print | xargs du -sk | sort -rn"
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 
-###################################  480 crap ########################################
-
-480tar () { tar -czvf Sim_0${1}_390762.tar.gz *.c *.h *_mf readme.txt; }
-
-
-###################################  499 crap ########################################
-alias ros_new='sudo docker run -it -p --rm 6080:80 nxtruong/f110sim'
-alias ros='sudo docker start eager_merkle; sudo docker attach eager_merkle;'
-
-###################################  386 crap ########################################
+# start android studio
 alias studio='~/android-studio/bin/studio.sh'
