@@ -1,0 +1,12 @@
+{
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+    "vim.enableNeovim": true,
+    "vim.neovimPath": "/usr/bin/nvim",
+    "editor.tabCompletion": "on",
+    "editor.minimap.enabled": false,
+    "editor.rulers": [80],
+    "window.zoomLevel": 0,
+    "workbench.startupEditor": "newUntitledFile"
+}
+
