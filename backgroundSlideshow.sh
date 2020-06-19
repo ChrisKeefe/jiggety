@@ -55,6 +55,7 @@ rm /usr/share/backgrounds/linuxmint-tessa/aruban_pitsunda.jpg /usr/share/backgro
 
 rm /usr/share/backgrounds/linuxmint-tina/aedmonds_snow.jpg /usr/share/backgrounds/linuxmint-tina/bfantinatti_lily_of_the_nile.jpg /usr/share/backgrounds/linuxmint-tina/ibandura_divide.jpg /usr/share/backgrounds/linuxmint-tina/jankaluza_* /usr/share/backgrounds/linuxmint-tina/linuxmint_mauritius.jpg /usr/share/backgrounds/linuxmint-tina/linuxmint_red_columbine.jpg /usr/share/backgrounds/linuxmint-tina/ndiamantidis_lighthouse.jpg /usr/share/backgrounds/linuxmint-tina/seano_ohahu.jpg /usr/share/backgrounds/linuxmint-tina/sezgin_* /usr/share/backgrounds/linuxmint-tina/acaproni_maldives.jpg 
 
+rm /usr/share/backgrounds/linuxmint-tricia/bfantinatti_night_sky.jpg /usr/share/backgrounds/linuxmint-tricia/jbeekhuis_bandon.jpg /usr/share/backgrounds/linuxmint-tricia/jrinke_florence.jpg /usr/share/backgrounds/linuxmint-tricia/kyoung_chicago.jpg /usr/share/backgrounds/linuxmint-tricia/aandreyev_coal.jpg
 EOF
 
 # Softlink all LM backgrounds in a single directory, and point the slideshow to it

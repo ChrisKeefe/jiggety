@@ -1,6 +1,8 @@
 #!/bin/sh
 
 set -ex
+# default mouse-button-modifier keybinding clobbers vscode multi-cursor, so...
+gsettings set org.cinnamon.desktop.wm.preferences mouse-button-modifier "<Super>"
 
 # Set Cinnamon sounds
 gsettings set org.cinnamon.sounds login-enabled false

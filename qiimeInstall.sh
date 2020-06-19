@@ -12,6 +12,10 @@ rm Miniconda3-latest-Linux-x86_64.sh
 # Set $PATH for this session, allowing bash to find conda
 PATH="/home/chris/miniconda3/bin:/home/chris/miniconda3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 
+# install conda tooling for building and uploading packages
+conda install conda-build -y
+conda install anaconda-client -y
+
 #Install latest q2 environment
 Q2LATEST=$(curl --silent "https://api.github.com/repos/qiime2/qiime2/tags" | jq -r '.[0].name')
 Q2PREV=$(curl --silent "https://api.github.com/repos/qiime2/qiime2/tags" | jq -r '.[1].name')
