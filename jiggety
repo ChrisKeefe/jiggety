@@ -26,6 +26,9 @@ if [[ "$CONFIG" == "y" ]]; then
 #	Conda appears to set a git prompt by default now:
 #	sed -i 's/($debian_chroot)}/($debian_chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
 
+	# Set global .gitignore
+	git config --global core.excludesfile ~/src/jiggety/dotfiles/gitignore_global
+
 	# add git aliases to .gitconfig
 	cat ~/src/jiggety/dotfiles/gitconfig >> ~/.gitconfig
 
