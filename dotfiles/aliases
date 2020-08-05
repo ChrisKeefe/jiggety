@@ -63,8 +63,10 @@ bumpdev () {
     rm qiime2-latest-py36-linux-conda.yml                                   
     conda activate q2-dev                                                   
     conda install nodejs pytest flake8 -y                                   
+    pip install pytest-cov
     cd ~/src/qiime2/docs                                                    
     pip install -r requirements.txt   
+    pip install -e ~/src/qiime2/q2lint
 }
 
 # launch q2-dev environment, navigate to qiime2 folder or repo, make dev, display available branches
