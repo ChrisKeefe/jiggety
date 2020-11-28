@@ -2,7 +2,7 @@
 alias please='sudo $(fc -ln -1)'
 # rerun last command recursively
 alias srsly='$(fc -ln -1) -r'
-alias nosrlsly='$(fc -ln -1) -rf'
+alias nosrsly='$(fc -ln -1) -rf'
 
 alias ll='ls -AlFh'
 alias la='ls -A'
