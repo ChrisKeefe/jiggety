@@ -2,6 +2,7 @@
 alias please='sudo $(fc -ln -1)'
 # rerun last command recursively
 alias srsly='$(fc -ln -1) -r'
+alias nosrlsly='$(fc -ln -1) -rf'
 
 alias ll='ls -AlFh'
 alias la='ls -A'
@@ -17,6 +18,7 @@ alias cd..="cd .."
 
 # personal naviagion aliases
 alias cdal='cd ~/data/alzmice'
+alias cdsrc='cd ~/src; l'
 
 # cd into folder and display contents
 cdl () { cd $1; l; }
