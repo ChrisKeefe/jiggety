@@ -108,3 +108,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # start android studio
 alias studio='~/android-studio/bin/studio.sh'
+
+###################################  480 crap ########################################
+480tar () { tar -czvf Sim_0${1}_390762.tar.gz *.c *.h *_mf readme.txt; }
