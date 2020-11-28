@@ -1,5 +1,6 @@
 # rerun last command as sudo
 alias please='sudo $(fc -ln -1)'
+alias srsly='$(fc -ln -1) -r'
 
 alias ll='ls -AlFh'
 alias la='ls -A'

@@ -9,5 +9,21 @@
       "key": "ctrl+shift+tab",
       "command": "workbench.action.terminal.focusPrevious",
       "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.navigateLeft"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.navigateRight"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.navigateUp"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.navigateDown"
     }
 ]
