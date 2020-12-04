@@ -3,6 +3,7 @@
 	email = crk239@nau.edu
 [core]
 	editor = vim
+	excludesfile = /home/chris/src/jiggety/dotfiles/gitignore_global
 [pager]
 	branch = false
 	remote = false
