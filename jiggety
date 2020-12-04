@@ -32,11 +32,14 @@ if [[ "$CONFIG" == "y" ]]; then
 	# add git aliases to .gitconfig
 	cat ~/src/jiggety/dotfiles/gitconfig >> ~/.gitconfig
 
-	# add bash aliases to .bashrc and source them
+	# symlink bash_aliases and source them in .bash_rc
 	# NOTE: must be non-root
-	if [ ! -f ~/.bash_aliases ]; then
-	  cat ~/src/jiggety/dotfiles/aliases >> ~/.bash_aliases
+	if [ -f ~/.bash_aliases ]; then
+	  echo ".bash_aliases already exists. backing it up at .bash_aliases_old"
+	  mv ~/.bash_aliases ~/.bash_aliases_old
 	fi
+
+	ln -s ~/src/jiggety/dotfiles/aliases ~/.bash_aliases
 	printf '\n# added by jiggety:\n' >> ~/.bashrc
 	printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_aliases' 'fi' >> ~/.bashrc
 
