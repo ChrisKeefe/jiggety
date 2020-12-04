@@ -26,16 +26,6 @@ if [[ "$CONFIG" == "y" ]]; then
 #	Conda appears to set a git prompt by default now:
 #	sed -i 's/($debian_chroot)}/($debian_chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
 
-	# set git name/address
-	git config --global user.email "crk239@nau.edu"
-	git config --global user.name "Chris Keefe"
-
-	# Set global .gitignore
-	git config --global core.excludesfile ~/src/jiggety/dotfiles/gitignore_global
-
-	# add git aliases to .gitconfig
-	cat ~/src/jiggety/dotfiles/gitconfig >> ~/.gitconfig
-
 	# symlink bash_aliases and source them in .bash_rc
 	# NOTE: must be non-root
 	if [ -f ~/.bash_aliases ]; then
@@ -46,6 +36,13 @@ if [[ "$CONFIG" == "y" ]]; then
 	ln -s ~/src/jiggety/dotfiles/aliases ~/.bash_aliases
 	printf '\n# added by jiggety:\n' >> ~/.bashrc
 	printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_aliases' 'fi' >> ~/.bashrc
+
+	# symlink git aliases
+	if [ -f ~/.gitconfig ]; then
+	  echo ".gitconfig already exists. backing it up at .gitconfig_old"
+	  mv ~/.gitconfig ~/.gitconfig_old
+	fi
+	ln -s ~/src/jiggety/dotfiles/gitconfig ~/.gitconfig
 
 	# Write NeoVim config to "nvimrc"
 	cat ~/src/jiggety/dotfiles/init.vim >> ~/.config/nvim/init.vim
