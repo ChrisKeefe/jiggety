@@ -1,9 +1,8 @@
 #!/bin/bash
-
 set -e
-PKGMAN="zypper"
-# OpenSUSE on btrfs saves snapshots by default
-sudo $PKGMAN ref
+
+# No need to configure backups. OpenSUSE on btrfs saves snapshots by default
+sudo zypper ref
 
 # TODO: First startup
 # log in to firefox and show bookmarks toolbar, remove pocket, set default search to duckduckgo.
@@ -18,12 +17,12 @@ sudo $PKGMAN ref
 # Eclipse
 
 sudo -s <<EOF
-sudo $PKGMAN install chromium-browser
-$PKGMAN install python3-idle -y
-$PKGMAN install python3-pip -y
+sudo zypper install chromium-browser
+zypper install python3-idle -y
+zypper install python3-pip -y
 pip install flake8
-$PKGMAN install texlive -y
-$PKGMAN install jq -y
+zypper install texlive -y
+zypper install jq -y
 
 #Install Miniconda, QIIME2, qiime2 repos, personal repos.
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
