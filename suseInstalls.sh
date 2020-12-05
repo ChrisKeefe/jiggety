@@ -16,22 +16,28 @@ sudo zypper update
 # clone common QIIME repos, add relevant git remotes
 # Install R and relevant packages (ggplot2, dplyr, etc)
 # Install firefox fb-blocker plugin
-# Eclipse
+
+# TODO: music and video players (clementine? vlc?)
+# inkscape? yed?
+# tree
+# vim and vim config
+# vscode
 
 read -p "Install LaTeX and Beamer Poster dependencies? [y/n] " LaTeX
-read -p "Install Slack and Discord (requires snapd and will prompt for pw)? [y/n] " SNAP
+read -p "Install Slack (requires snapd and will prompt for pw)? [y/n] " SNAP
+read -p "Install Discord? [y/n] " DISCORD
 
 sudo -s <<EOF
 
 # required dependencies
-zypper install jq -y
+zypper --non-interactive install jq
 
 # snapcraft config
 if [[ ${SNAP} = "y" ]]; then
   zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2 snappy
   zypper --gpg-auto-import-keys refresh
   zypper dup --from snappy
-  zypper install snapd -y
+  zypper --non-interactive install snapd
 
   # add snapd to path
   source /etc/profile
@@ -41,6 +47,24 @@ if [[ ${SNAP} = "y" ]]; then
   snap install slack --classic
 fi
 
+# optional software
+sudo zypper --non-interactive install chromium
+pip install flake8
+
+if [[ ${LaTeX} = "y" ]]; then
+        # Install LaTeX
+	zypper --non-interactive install texlive
+
+        # install beamer dependencies
+	zypper --non-interactive install texlive-luatex qrencode
+
+	# TODO: install fonts
+fi
+
+# TODO: test this: may require su perms in discord_from_tar.sh
+if [[ ${DISCORD} = "y" ]]; then
+	bash discord_from_tar.sh
+fi
 
 #Install Miniconda, QIIME2, qiime2 repos, personal repos.
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -49,27 +73,6 @@ SHELL=$0
 eval "$(~/miniconda/bin/conda shell.$SHELL hook)"
 conda init
 rm Miniconda3-latest-*
-
-# optional software
-zypper install chromium-browser
-pip install flake8
-
-if [[ ${LaTeX} = "y" ]]; then
-        # Install LaTeX
-	zypper install texlive -y
-
-        # install beamer dependencies
-	zypper install texlive-luatex qrencode -y
-
-	# TODO: install fonts
-fi
-
-# Install Discord
-wget "https://discordapp.com/api/download/stable?platform=linux&format=tar.gz" -O /opt/discord.tar.gz
-tar -xvf /opt/discord.tar.gz -C /opt/
-ln -s /opt/Discord/Discord /usr/local/bin/discord
-ln -s ~/src/jiggety/desktop_files/discord.desktop ~/.local/share/applications
-
 
 #Install q2 environment
 Q2LATEST=$(curl --silent "https://api.github.com/repos/qiime2/qiime2/tags" | jq -r '.[0].name')
