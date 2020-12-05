@@ -2,18 +2,30 @@
 # Configure openSUSE
 
 read -p 'Install all standard productivity software? [y/n] ' INSTALL
-read -p 'Configure Terminal, bash, git, and vim? [y/n] ' CONFIG
-read -p 'Add background images and filter out the bad ones? [y/n]' BGROUND
 read -p 'Install Miniconda and QIIME 2? [y/n] ' QIIME
 read -p 'Clone all of your github repos? [y/n] ' SCRAPE_GH
+read -p 'Configure Terminal, bash, git, and vim? [y/n] ' CONFIG
+read -p 'Add mint background images and filter out the bad ones? [y/n]' BGROUND
 
 if [[ "$INSTALL" == "y" ]]; then
 	bash ~/src/jiggety/suseInstalls.sh
 fi
 
+if [[ "$QIIME" == "y" ]]; then
+	bash ~/src/jiggety/qiimeInstall.sh
+fi
+
+if [[ "$SCRAPE_GH" == "y" ]]; then
+	read -p "Have you already configured an SSH Key and API Token for github? [y/n] " KEYS
+	if [[ "$KEYS" == "n" ]]; then
+		bash ~/src/jiggety/generateKeys.sh
+	fi
+	bash ~/src/jiggety/cloneAll.sh
+fi
+
 if [[ "$CONFIG" == "y" ]]; then
 	# Configure GNOME desktop (sounds, bluetooth, etc)
-	bash ~/src/jiggety/cinnamonConfig.sh
+	bash ~/src/jiggety/gnomeConfig.sh
 	
 	# Overwrite Gnome Terminal defaults
 	bash ~/src/jiggety/terminalconfig.sh
@@ -32,7 +44,6 @@ if [[ "$CONFIG" == "y" ]]; then
 	  echo ".bash_aliases already exists. backing it up at .bash_aliases_old"
 	  mv ~/.bash_aliases ~/.bash_aliases_old
 	fi
-
 	ln -s ~/src/jiggety/dotfiles/aliases ~/.bash_aliases
 	printf '\n# added by jiggety:\n' >> ~/.bashrc
 	printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_aliases' 'fi' >> ~/.bashrc
@@ -52,15 +63,3 @@ if [[ "$BGROUND" == "y" ]]; then
 	bash ~/src/jiggety/backgroundSlideshow.sh
 fi
 
-if [[ "$QIIME" == "y" ]]; then
-	bash ~/src/jiggety/qiimeInstall.sh
-fi
-
-
-if [[ "$SCRAPE_GH" == "y" ]]; then
-	read -p "Have you already configured an SSH Key and API Token for github? [y/n] " KEYS
-	if [[ "$KEYS" == "n" ]]; then
-		bash ~/src/jiggety/generateKeys.sh
-	fi
-	bash ~/src/jiggety/cloneAll.sh
-fi
