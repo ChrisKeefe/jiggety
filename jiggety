@@ -1,27 +1,27 @@
 #!/bin/bash
-# Configure linuxMint - backups, workspaces, tiling, hot corners, icons on panel
+# Configure openSUSE
 
-read -p 'Configure Cinnamon, Terminal, bash, git, and vim? [y/n] ' CONFIG
-read -p 'Add background images and filter out the bad ones? [y/n]' BGROUND
 read -p 'Install all standard productivity software? [y/n] ' INSTALL
+read -p 'Configure Terminal, bash, git, and vim? [y/n] ' CONFIG
+read -p 'Add background images and filter out the bad ones? [y/n]' BGROUND
 read -p 'Install Miniconda and QIIME 2? [y/n] ' QIIME
 read -p 'Clone all of your github repos? [y/n] ' SCRAPE_GH
 
+if [[ "$INSTALL" == "y" ]]; then
+	bash ~/src/jiggety/suseInstalls.sh
+fi
+
 if [[ "$CONFIG" == "y" ]]; then
-# TODO: overwrite .bashrc with dotfile rather than editing dotfile (for idempotence)
-	
-	# Configure cinnamon (sounds, bluetooth, etc)
+	# Configure GNOME desktop (sounds, bluetooth, etc)
 	bash ~/src/jiggety/cinnamonConfig.sh
 	
-	# Overwrite awful Gnome Terminal defaults
+	# Overwrite Gnome Terminal defaults
 	bash ~/src/jiggety/terminalconfig.sh
 
 	# back up .bashrc
 	cp ~/.bashrc ~/.bashrc_old
 
-	# download and source supporting file, then edit .bashrc PS1 variable to display git branch
-	curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
-	sed -i '1isource ~/.git-prompt.sh\n' ~/.bashrc
+	# TODO: edit .bashrc PS1 variable to display git branch
 
 #	Conda appears to set a git prompt by default now:
 #	sed -i 's/($debian_chroot)}/($debian_chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
@@ -50,18 +50,6 @@ fi
 
 if [[ "$BGROUND" == "y" ]]; then
 	bash ~/src/jiggety/backgroundSlideshow.sh
-fi
-
-if [[ "$INSTALL" == "y" ]]; then
-
-	read -p 'Are you provisioning Mint or openSUSE? (mint/open)? ' DISTRO
-	if [[ "$DISTRO" == "mint" ]]; then
-		bash ~/src/jiggety/mintInstalls.sh
-	fi
-
-	if [[ "$DISTRO" == "open" ]]; then
-		bash ~/src/jiggety/suseInstalls.sh
-	fi
 fi
 
 if [[ "$QIIME" == "y" ]]; then

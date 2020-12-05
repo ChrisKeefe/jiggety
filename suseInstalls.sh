@@ -2,27 +2,45 @@
 set -e
 
 # No need to configure backups. OpenSUSE on btrfs saves snapshots by default
+
+# Update zypper repos and system updates
 sudo zypper ref
+sudo zypper update
 
 # TODO: First startup
 # log in to firefox and show bookmarks toolbar, remove pocket, set default search to duckduckgo.
 # deal with passwording: https://stackoverflow.com/a/11955369
 
 # TODO: Install
-# fonts for getGit
 # both printers (attached, move into /etc/cups/ppd, set root as owner)
 # clone common QIIME repos, add relevant git remotes
 # Install R and relevant packages (ggplot2, dplyr, etc)
 # Install firefox fb-blocker plugin
 # Eclipse
 
+read -p "Install LaTeX and Beamer Poster dependencies? [y/n] " LaTeX
+read -p "Install Slack and Discord (requires snapd and will prompt for pw)? [y/n] " SNAP
+
 sudo -s <<EOF
-sudo zypper install chromium-browser
-zypper install python3-idle -y
-zypper install python3-pip -y
-pip install flake8
-zypper install texlive -y
+
+# required dependencies
 zypper install jq -y
+
+# snapcraft config
+if [[ ${SNAP} = "y" ]]; then
+  zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2 snappy
+  zypper --gpg-auto-import-keys refresh
+  zypper dup --from snappy
+  zypper install snapd -y
+
+  # add snapd to path
+  source /etc/profile
+
+  systemctl enable --now snapd
+
+  snap install slack --classic
+fi
+
 
 #Install Miniconda, QIIME2, qiime2 repos, personal repos.
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -32,8 +50,26 @@ eval "$(~/miniconda/bin/conda shell.$SHELL hook)"
 conda init
 rm Miniconda3-latest-*
 
-# hit enter, scroll through license w/enter, type "yes", hit enter, hit enter to confirm
-# default location, yes and enter to configure in .bashrc
+# optional software
+zypper install chromium-browser
+pip install flake8
+
+if [[ ${LaTeX} = "y" ]]; then
+        # Install LaTeX
+	zypper install texlive -y
+
+        # install beamer dependencies
+	zypper install texlive-luatex qrencode -y
+
+	# TODO: install fonts
+fi
+
+# Install Discord
+wget "https://discordapp.com/api/download/stable?platform=linux&format=tar.gz" -O /opt/discord.tar.gz
+tar -xvf /opt/discord.tar.gz -C /opt/
+ln -s /opt/Discord/Discord /usr/local/bin/discord
+ln -s ~/src/jiggety/desktop_files/discord.desktop ~/.local/share/applications
+
 
 #Install q2 environment
 Q2LATEST=$(curl --silent "https://api.github.com/repos/qiime2/qiime2/tags" | jq -r '.[0].name')
@@ -60,7 +96,6 @@ rm qiime2-latest-py36-linux-conda.yml
 EOF
 
 # TODO: 
-# download all qiime and personal repos
 # conda create --name gitRepoDump --clone base
 # conda activate gitRepoDump
 # conda install nodejs -y
