@@ -1,6 +1,13 @@
 #!/bin/bash
 # Configure openSUSE
 
+read -p 'Would you like to rename this computer? openSUSE ships with hostname=NA. [y/n]' RENAME
+
+if [[ "$RENAME" == "y" ]]; then
+	read -p 'What new name would you like to use? ' SWEET_NAME_HERE
+	sudo hostnamectl set-hostname $SWEET_NAME_HERE
+fi
+
 read -p 'Install all standard productivity software? [y/n] ' INSTALL
 read -p 'Install Miniconda and QIIME 2? [y/n] ' QIIME
 read -p 'Clone all of your github repos? [y/n] ' SCRAPE_GH
