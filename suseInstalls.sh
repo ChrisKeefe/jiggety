@@ -30,6 +30,7 @@ sudo -s <<EOF
 
 # required dependencies
 zypper --non-interactive install jq
+zypper --non-interactive install sshpass
 # xclip is pre-installed with this SUSE config
 
 # snapcraft config and slack install
