@@ -1,3 +1,7 @@
+# Edit this file
+alias cozy='vim ~/src/jiggety/dotfiles/aliases'
+alias cozyup='source ~/.bash_aliases'
+
 # rerun last command as sudo
 alias please='sudo $(fc -ln -1)'
 # rerun last command recursively
