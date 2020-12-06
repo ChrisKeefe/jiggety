@@ -33,6 +33,12 @@ zypper --non-interactive install jq
 zypper --non-interactive install sshpass
 # xclip is pre-installed with this SUSE config
 
+# Configure pre-installed flatpak
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak update
+
+flatpak install flathub zoom -y --noninteractive
+
 # snapcraft config and slack install
 if [[ ${SLACK} = "y" ]]; then
     zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2 snappy
@@ -77,6 +83,7 @@ fi
 
 # optional software
 sudo zypper --non-interactive install chromium
+zypper --non-interactive in htop
 pip install flake8
 EOF
 
