@@ -21,6 +21,10 @@ if [[ "$SCRAPE_GH" == "y" ]]; then
 		bash ~/src/jiggety/generateKeys.sh
 	fi
 	bash ~/src/jiggety/cloneAll.sh
+
+	if [[ "$KEYS" == "n" ]]; then
+	        rm ~/src/jiggety/scrpt_vars
+	fi
 fi
 
 if [[ "$CONFIG" == "y" ]]; then
