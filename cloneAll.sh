@@ -2,7 +2,7 @@
 set -e
 
 # TODO: segregate q2 repos into separate subdir
-printf "What is your GH username?"
+printf "What is your GH username?\n"
 read UNAME
 ORG="qiime2"
 export ORG
@@ -13,7 +13,7 @@ ORGDIR="$HOME/src/${ORG}org"
 export ORGDIR
 
 if [[ ! -f ~/src/${ORGDIR} ]]; then
-	mkdir ~/src/${ORGDIR}
+	mkdir ${ORGDIR}
 fi
 
 # TODO: can this line be deleted?
