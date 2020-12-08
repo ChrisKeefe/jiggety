@@ -6,8 +6,7 @@ set -e
 read -p "What is your github email address? " GHEMAIL
 
 # Generate GH SSH Key
-# NOTE: ~/.ssh/id_rsa fails
-ssh-keygen -t rsa -b 4096 -C "${GHEMAIL}" -f $HOME/.ssh/id_rsa
+ssh-keygen -t rsa -b 4096 -C "${GHEMAIL}"
 
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa

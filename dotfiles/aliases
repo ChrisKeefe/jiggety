@@ -1,7 +1,3 @@
-# Edit this file
-alias cozy='vim ~/src/jiggety/dotfiles/aliases'
-alias cozyup='source ~/.bash_aliases'
-
 # rerun last command as sudo
 alias please='sudo $(fc -ln -1)'
 # rerun last command recursively
@@ -45,9 +41,8 @@ alias condeac='conda deactivate'
 alias conlt='conda activate q2-20.11'
 alias condev='conda activate q2-dev'
 
-# log into vpn, monsoon, CEFNS linux server
-alias vpn='bash ~/src/jiggety/scripts/vpn.sh'
-alias limon='bash ~/src/jiggety/scripts/limon.sh'
+# log into monsoon, CEFNS linux server
+alias limon='ssh crk239@monsoon.hpc.nau.edu'
 alias licef='ssh crk239@linux.cefns.nau.edu'
 
 # scp from monsoon into local directory
@@ -62,6 +57,7 @@ alias tns='tmux new-session -s'
 
 # Misc Applications
 alias jn='jupyter notebook'
+alias vpn='sudo openconnect -b nauvpn.nau.edu'
 
 # replace q2-dev environment - assumes q2-dev exists
 bumpdev () {

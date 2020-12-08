@@ -1,90 +1,68 @@
 #!/bin/bash
+
 set -e
-
-# No need to configure backups. OpenSUSE on btrfs saves snapshots by default
-
-# Update zypper repos and system updates
-sudo zypper ref
-sudo zypper update
+PKGMAN="zypper"
+# OpenSUSE on btrfs saves snapshots by default
+sudo $PKGMAN ref
 
 # TODO: First startup
 # log in to firefox and show bookmarks toolbar, remove pocket, set default search to duckduckgo.
 # deal with passwording: https://stackoverflow.com/a/11955369
 
 # TODO: Install
+# fonts for getGit
 # both printers (attached, move into /etc/cups/ppd, set root as owner)
+# clone common QIIME repos, add relevant git remotes
 # Install R and relevant packages (ggplot2, dplyr, etc)
-# music and video players (clementine? vlc?)
-# inkscape? yed?
-# tree
-# vim and vim config
-# vscode
-
-read -p "Install LaTeX and Beamer Poster dependencies? [y/n] " LaTeX
-read -p "Install Slack (requires snapd and will prompt for pw)? [y/n] " SLACK
-read -p "Install Discord? [y/n] " DISCORD
-read -p "Install VSCode? [y/n] " CODE
-read -p "Keep it simple, or try to install yEd? [simple/yed] " YED
+# Install firefox fb-blocker plugin
+# Eclipse
 
 sudo -s <<EOF
-
-# required dependencies
-zypper --non-interactive install jq
-zypper --non-interactive install sshpass
-# xclip is pre-installed with this SUSE config
-
-# Configure pre-installed flatpak
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak update
-
-flatpak install flathub zoom -y --noninteractive
-
-# snapcraft config and slack install
-if [[ ${SLACK} = "y" ]]; then
-    zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2 snappy
-    zypper --gpg-auto-import-keys refresh
-    zypper dup --from snappy
-    zypper --non-interactive install snapd
-
-    # add snapd to path
-    source /etc/profile
-
-    systemctl enable --now snapd
-
-    snap install slack --classic
-fi
-
-
-if [[ ${LaTeX} = "y" ]]; then
-    zypper --non-interactive install texlive
-    # install beamer dependencies
-    zypper --non-interactive install texlive-luatex qrencode
-    # TODO: install fonts
-fi
-
-if [[ ${DISCORD} = "y" ]]; then
-    # TODO: test this: may require su perms in discord_from_tar.sh
-    bash discord_from_tar.sh
-fi
-
-# Install VSCode
-if [[ ${CODE} = "y" ]]; then
-    rpm --import https://packages.microsoft.com/keys/microsoft.asc
-    zypper addrepo https://packages.microsoft.com/yumrepos/vscode vscode
-    zypper refresh
-    zypper --non-interactive install code
-    # TODO: vscode config (incl turning off telemetry)
-fi
-
-# Hacky lightweight yEd install
-if [[ ${YED} = "yed" ]]; then
-        bash install_yEd.sh
-fi
-
-# optional software
-zypper --non-interactive install vlc  
-zypper --non-interactive install chromium
-zypper --non-interactive in htop
+sudo $PKGMAN install chromium-browser
+$PKGMAN install python3-idle -y
+$PKGMAN install python3-pip -y
 pip install flake8
+$PKGMAN install texlive -y
+$PKGMAN install jq -y
+
+#Install Miniconda, QIIME2, qiime2 repos, personal repos.
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
+SHELL=$0
+eval "$(~/miniconda/bin/conda shell.$SHELL hook)"
+conda init
+rm Miniconda3-latest-*
+
+# hit enter, scroll through license w/enter, type "yes", hit enter, hit enter to confirm
+# default location, yes and enter to configure in .bashrc
+
+#Install q2 environment
+Q2LATEST=$(curl --silent "https://api.github.com/repos/qiime2/qiime2/tags" | jq -r '.[0].name')
+Q2PREV=$(curl --silent "https://api.github.com/repos/qiime2/qiime2/tags" | jq -r '.[1].name')
+ISDEV=$(echo $Q2LATEST | grep -o 'dev')
+
+# if latest version is a dev version, use the prior tag. Else, it is a patch and we should use that
+if [[ $ISDEV == "dev" ]]; then
+  Q2LATEST=$Q2PREV
+fi
+# Strip patch numbers for download
+Q2LATEST=$(echo $Q2LATEST | grep -oP '20[12][0-9]\.[0-9]+')
+Q2SHORT=$(echo "$Q2LATEST" | grep -oP '[12][0-9]\.[0-9]+')
+Q2URL="https://data.qiime2.org/distro/core/qiime2-${Q2LATEST}-py36-linux-conda.yml"
+conda update conda -y
+wget $Q2URL
+conda env create -n "q2-${Q2SHORT}" --file "qiime2-${Q2LATEST}-py36-linux-conda.yml"
+rm "qiime2-${Q2LATEST}-py36-linux-conda.yml"
+
+#Install dev environment
+wget https://raw.githubusercontent.com/qiime2/environment-files/master/latest/staging/qiime2-latest-py36-linux-conda.yml
+conda env create -n q2-dev --file qiime2-latest-py36-linux-conda.yml
+rm qiime2-latest-py36-linux-conda.yml
 EOF
 
+# TODO: 
+# download all qiime and personal repos
+# conda create --name gitRepoDump --clone base
+# conda activate gitRepoDump
+# conda install nodejs -y
+# npm install -g git-friends
