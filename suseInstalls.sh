@@ -82,7 +82,8 @@ if [[ ${YED} = "yed" ]]; then
 fi
 
 # optional software
-sudo zypper --non-interactive install chromium
+zypper --non-interactive install vlc  
+zypper --non-interactive install chromium
 zypper --non-interactive in htop
 pip install flake8
 EOF
