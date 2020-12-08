@@ -1,16 +1,15 @@
 # jiggety
-Workstation config scripts for linuxMint and (sortof) openSUSE that make you feel home again and happy. Jiggety jig.
+Workstation config scripts for openSUSE that make you feel home again and happy. Jiggety jig.
 
 
 ## Jiggety expects
-- a fresh install of LinuxMint or openSUSE Tumbleweed
+- a fresh install of openSUSE Leap
 - a working internet connection
 - you have already installed git
 
-- if you are using LinuxMint, you have configured Timeshift snapshots to use RSYNC
-
 ## To use: 
 - Clone or otherwise download this repository
+- Check out openSUSE (or master for LinuxMint installs)
 - Navigate into the repository on your local machine
 - Review and personalize the code - ensure you know what you're doing before you push the red button
 - `bash jiggety`

@@ -1,27 +1,52 @@
 #!/bin/bash
-# Configure linuxMint - backups, workspaces, tiling, hot corners, icons on panel
+# Configure openSUSE
 
-read -p 'Configure Cinnamon, Terminal, bash, git, and vim? [y/n] ' CONFIG
-read -p 'Add background images and filter out the bad ones? [y/n]' BGROUND
+read -p 'Would you like to rename this computer? openSUSE ships with hostname=NA. [y/n]' RENAME
+
+if [[ "$RENAME" == "y" ]]; then
+	read -p 'What new name would you like to use? ' SWEET_NAME_HERE
+	sudo hostnamectl set-hostname $SWEET_NAME_HERE
+fi
+
 read -p 'Install all standard productivity software? [y/n] ' INSTALL
 read -p 'Install Miniconda and QIIME 2? [y/n] ' QIIME
 read -p 'Clone all of your github repos? [y/n] ' SCRAPE_GH
+read -p 'Configure Terminal, bash, git, and vim? [y/n] ' CONFIG
+read -p 'Add mint background images and filter out the bad ones? [y/n]' BGROUND
+
+if [[ "$INSTALL" == "y" ]]; then
+	# install packman and codecs for video applications. required for vlc install in suseInstalls.sh
+	bash ~/src/jiggety/videoCodecs.sh
+	bash ~/src/jiggety/suseInstalls.sh
+fi
+
+if [[ "$QIIME" == "y" ]]; then
+	bash ~/src/jiggety/qiimeInstall.sh
+fi
+
+if [[ "$SCRAPE_GH" == "y" ]]; then
+	read -p "Have you already configured an SSH Key and API Token for github? [y/n] " KEYS
+	if [[ "$KEYS" == "n" ]]; then
+		bash ~/src/jiggety/generateKeys.sh
+	fi
+	bash ~/src/jiggety/cloneAll.sh
+
+	if [[ "$KEYS" == "n" ]]; then
+	        rm ~/src/jiggety/scrpt_vars
+	fi
+fi
 
 if [[ "$CONFIG" == "y" ]]; then
-# TODO: overwrite .bashrc with dotfile rather than editing dotfile (for idempotence)
+	# Configure GNOME desktop (sounds, bluetooth, etc)
+	bash ~/src/jiggety/gnomeConfig.sh
 	
-	# Configure cinnamon (sounds, bluetooth, etc)
-	bash ~/src/jiggety/cinnamonConfig.sh
-	
-	# Overwrite awful Gnome Terminal defaults
+	# Overwrite Gnome Terminal defaults
 	bash ~/src/jiggety/terminalconfig.sh
 
 	# back up .bashrc
 	cp ~/.bashrc ~/.bashrc_old
 
-	# download and source supporting file, then edit .bashrc PS1 variable to display git branch
-	curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
-	sed -i '1isource ~/.git-prompt.sh\n' ~/.bashrc
+	# TODO: edit .bashrc PS1 variable to display git branch
 
 #	Conda appears to set a git prompt by default now:
 #	sed -i 's/($debian_chroot)}/($debian_chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
@@ -32,7 +57,6 @@ if [[ "$CONFIG" == "y" ]]; then
 	  echo ".bash_aliases already exists. backing it up at .bash_aliases_old"
 	  mv ~/.bash_aliases ~/.bash_aliases_old
 	fi
-
 	ln -s ~/src/jiggety/dotfiles/aliases ~/.bash_aliases
 	printf '\n# added by jiggety:\n' >> ~/.bashrc
 	printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_aliases' 'fi' >> ~/.bashrc
@@ -52,27 +76,3 @@ if [[ "$BGROUND" == "y" ]]; then
 	bash ~/src/jiggety/backgroundSlideshow.sh
 fi
 
-if [[ "$INSTALL" == "y" ]]; then
-
-	read -p 'Are you provisioning Mint or openSUSE? (mint/open)? ' DISTRO
-	if [[ "$DISTRO" == "mint" ]]; then
-		bash ~/src/jiggety/mintInstalls.sh
-	fi
-
-	if [[ "$DISTRO" == "open" ]]; then
-		bash ~/src/jiggety/suseInstalls.sh
-	fi
-fi
-
-if [[ "$QIIME" == "y" ]]; then
-	bash ~/src/jiggety/qiimeInstall.sh
-fi
-
-
-if [[ "$SCRAPE_GH" == "y" ]]; then
-	read -p "Have you already configured an SSH Key and API Token for github? [y/n] " KEYS
-	if [[ "$KEYS" == "n" ]]; then
-		bash ~/src/jiggety/generateKeys.sh
-	fi
-	bash ~/src/jiggety/cloneAll.sh
-fi
