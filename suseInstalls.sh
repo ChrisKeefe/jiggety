@@ -40,8 +40,16 @@ flatpak update
 flatpak install flathub zoom -y --noninteractive
 
 # snapcraft config and slack install
+read -p 'Leap or tumbleweed? [leap/tumbleweed] ' WHICH_SUSE
+if [[ "$WHICH_SUSE" == "leap" ]]; then
+	read -p 'What version number? [e.g. 15.0] ' SUSE_VERSION_NUMBER
+	SUSE_VERSION_STR=openSUSE_Leap_${SUSE_VERSION_NUMBER}
+else
+	SUSE_VERSION_STR=openSUSE_Tumbleweed
+fi
+
 if [[ ${SLACK} = "y" ]]; then
-    zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2 snappy
+    zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/${SUSE_VERSION_STR} snappy
     zypper --gpg-auto-import-keys refresh
     zypper dup --from snappy
     zypper --non-interactive install snapd
