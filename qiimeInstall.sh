@@ -20,8 +20,8 @@ conda install anaconda-client -y
 #Install latest q2 environment
 Q2LATEST=$(curl --silent "https://api.github.com/repos/qiime2/qiime2/tags" | jq -r '.[0].name')
 Q2PREV=$(curl --silent "https://api.github.com/repos/qiime2/qiime2/tags" | jq -r '.[1].name')
-ISDEV=$(echo $Q2LATEST | grep -o 'dev')
-
+# logical or required to prevent script termination if no value found (grep returns 1)
+ISDEV=$(echo $Q2LATEST | grep -o 'dev' || [[ $? == 1 ]])
 
 # if latest version is a dev version, use the prior tag. Else, it is a patch and we should use that
 if [[ $ISDEV == "dev" ]]; then
