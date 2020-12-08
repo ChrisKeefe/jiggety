@@ -26,5 +26,3 @@ EOF
 # Cleanup
 rm ~/Downloads/yEd-3.19.zip
 
-
-
