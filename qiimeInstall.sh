@@ -1,14 +1,14 @@
-#!/bin/sh
-
+#!/bin/bash
 set -e
 
 #Install Miniconda
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+if [[ ! -f "Miniconda3-latest-Linux-x86_64.sh" ]]; then
+  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+fi
 bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
 SHELL=$0
 eval "$(~/miniconda/bin/conda shell.$SHELL hook)"
 conda init
-rm Miniconda3-latest-*
 
 # Set $PATH for this session, allowing bash to find conda
 PATH="/home/chris/miniconda3/bin:/home/chris/miniconda3/condabin:/usr/local/bin:/usr/bin:/bin"
@@ -32,13 +32,16 @@ fi
 Q2LATEST=$(echo $Q2LATEST | grep -oP '20[12][0-9]\.[0-9]+')
 Q2SHORT=$(echo "$Q2LATEST" | grep -oP '[12][0-9]\.[0-9]+')
 Q2URL="https://data.qiime2.org/distro/core/qiime2-${Q2LATEST}-py36-linux-conda.yml"
+
 conda update conda -y
 wget $Q2URL
 conda env create -n "q2-${Q2SHORT}" --file "qiime2-${Q2LATEST}-py36-linux-conda.yml"
-rm "qiime2-${Q2LATEST}-py36-linux-conda.yml"
 
 #Install dev environment
 wget https://raw.githubusercontent.com/qiime2/environment-files/master/latest/staging/qiime2-latest-py36-linux-conda.yml
 conda env create -n q2-dev --file qiime2-latest-py36-linux-conda.yml
-rm qiime2-latest-py36-linux-conda.yml
 
+#cleanup
+rm "qiime2-${Q2LATEST}-py36-linux-conda.yml"
+rm qiime2-latest-py36-linux-conda.yml
+rm Miniconda3-latest-*
