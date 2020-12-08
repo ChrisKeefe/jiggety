@@ -1,6 +1,8 @@
 #!/bin/bash
 # Configure openSUSE
 
+printf "Current hostname: "
+echo $(hostname)
 read -p 'Would you like to rename this computer? openSUSE ships with hostname=NA. [y/n]' RENAME
 
 if [[ "$RENAME" == "y" ]]; then
