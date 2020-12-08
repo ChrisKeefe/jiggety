@@ -6,8 +6,7 @@ if [[ ! -f "Miniconda3-latest-Linux-x86_64.sh" ]]; then
   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 fi
 bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda
-SHELL=$0
-eval "$(~/miniconda/bin/conda shell.$SHELL hook)"
+source ~/miniconda/etc/profile.d/conda.sh
 conda init
 
 # Set $PATH for this session, allowing bash to find conda
