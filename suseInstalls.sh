@@ -17,14 +17,13 @@ sudo zypper update
 # music and video players (clementine? vlc?)
 # inkscape? yed?
 # tree
-# vim and vim config
-# vscode
 
 read -p "Install LaTeX and Beamer Poster dependencies? [y/n] " LaTeX
 read -p "Install Slack (requires snapd and will prompt for pw)? [y/n] " SLACK
 read -p "Install Discord? [y/n] " DISCORD
 read -p "Install VSCode? [y/n] " CODE
 read -p "Keep it simple, or try to install yEd? [simple/yed] " YED
+
 
 sudo -s <<EOF
 

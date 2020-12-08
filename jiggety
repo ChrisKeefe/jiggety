@@ -10,11 +10,24 @@ if [[ "$RENAME" == "y" ]]; then
 	sudo hostnamectl set-hostname $SWEET_NAME_HERE
 fi
 
+read -p "Install Pop-shell for window tiling? [y/n] " POP_SHELL
 read -p 'Install all standard productivity software? [y/n] ' INSTALL
 read -p 'Install Miniconda and QIIME 2? [y/n] ' QIIME
 read -p 'Clone all of your github repos? [y/n] ' SCRAPE_GH
 read -p 'Configure Terminal, bash, git, and vim? [y/n] ' CONFIG
 read -p 'Add mint background images and filter out the bad ones? [y/n]' BGROUND
+
+if [[ ${POP_SHELL} = "y" ]]; then
+  if ! command -v gnome-exensions > /dev/null; then
+	sudo zypper --non-interactive install gnome-extensions
+	echo "gnome-extensions requires a shell restart or reboot. Wayland can't preserve state over restart.\n Re-run jiggety after restart to continue installation."
+	exit 0;
+  fi
+
+  git clone git@github.com:pop-os/shell.git ~/src
+  cd ~/src/shell
+  make local-install
+fi
 
 if [[ "$INSTALL" == "y" ]]; then
 	# install packman and codecs for video applications. required for vlc install in suseInstalls.sh
