@@ -74,6 +74,16 @@ if [[ "$CONFIG" == "y" ]]; then
 	mkdir ~/.config/nvim
 	cat ~/src/jiggety/dotfiles/init.vim >> ~/.config/nvim/init.vim
 	read -p "Open nvim and type :VundleInstall. [Enter to continue] " DUMMY
+
+	# symlink vscode settings and keybinds to jiggety
+	read -p "Overwrite VSCode settings and keybinds with dotfiles? [y/n]' VSCODE
+	if [[ "$VSCODE" == "y" ]]; then
+	  cp ~/.config/Code/User/settings.json ~/.config/Code/User/settings_bkp.json
+	  ln -sf ~/src/jiggety/dotfiles/vsc_settings.json ~/.config/Code/User/settings.json
+
+	  cp ~/.config/Code/User/keybindings.json ~/.config/Code/User/keybindings_bkp.json
+	  ln -sf ~/src/jiggety/dotfiles/vsc_keybindings.json ~/.config/Code/User/keybindings.json
+	fi
 fi
 
 if [[ "$BGROUND" == "y" ]]; then

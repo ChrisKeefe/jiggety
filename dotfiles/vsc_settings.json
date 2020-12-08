@@ -1,5 +1,5 @@
 {
-    "telemetry.enableTelemetry": false,
+    "telemetry.enableTelemetry": false,
     "telemetry.enableCrashReporter": false,
     "vim.enableNeovim": true,
     "vim.neovimPath": "/usr/bin/nvim",
