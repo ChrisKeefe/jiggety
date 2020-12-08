@@ -28,3 +28,7 @@ fi
 
 echo "export GHTKN=\"${TMPTOKEN}\"" >> scrpt_vars
 source scrpt_vars
+
+# Update jiggety remote URL so use SSH
+git remote remove origin
+git remote add origin git@github.com:ChrisKeefe/jiggety.git
