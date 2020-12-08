@@ -2,6 +2,9 @@
 alias cozy='vim ~/src/jiggety/dotfiles/aliases'
 alias cozyup='source ~/.bash_aliases'
 
+# Use nvim instead of vim
+alias vim='nvim'
+
 # rerun last command as sudo
 alias please='sudo $(fc -ln -1)'
 # rerun last command recursively

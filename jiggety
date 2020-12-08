@@ -69,7 +69,9 @@ if [[ "$CONFIG" == "y" ]]; then
 	ln -s ~/src/jiggety/dotfiles/gitconfig ~/.gitconfig
 
 	# Write NeoVim config to "nvimrc"
+	mkdir ~/.config/nvim
 	cat ~/src/jiggety/dotfiles/init.vim >> ~/.config/nvim/init.vim
+	read -p "Open nvim and type :VundleInstall. [Enter to continue] " DUMMY
 fi
 
 if [[ "$BGROUND" == "y" ]]; then

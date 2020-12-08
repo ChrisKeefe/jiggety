@@ -85,6 +85,8 @@ fi
 zypper --non-interactive install vlc  
 zypper --non-interactive install chromium
 zypper --non-interactive in htop
+zypper --non-interactive in neovim
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 pip install flake8
 EOF
 
