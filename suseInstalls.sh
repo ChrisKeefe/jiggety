@@ -14,7 +14,6 @@ sudo zypper update
 # TODO: Install
 # both printers (attached, move into /etc/cups/ppd, set root as owner)
 # Install R and relevant packages (ggplot2, dplyr, etc)
-# music and video players (clementine? vlc?)
 # inkscape? yed?
 # tree
 
@@ -88,6 +87,7 @@ fi
 
 # optional software
 zypper --non-interactive install vlc  
+zypper --non-interactive install clementine
 zypper --non-interactive install chromium
 zypper --non-interactive in htop
 zypper --non-interactive in neovim
