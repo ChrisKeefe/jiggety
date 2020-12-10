@@ -19,7 +19,7 @@ sudo zypper update
 # tree
 
 read -p "Install LaTeX and Beamer Poster dependencies? [y/n] " LaTeX
-read -p "Install Slack (requires snapd and will prompt for pw)? [y/n] " SLACK
+read -p "Install Snap (requires snapd and will prompt for pw)? [y/n] " SNAP
 read -p "Install Discord? [y/n] " DISCORD
 read -p "Install VSCode? [y/n] " CODE
 read -p "Keep it simple, or try to install yEd? [simple/yed] " YED
@@ -36,7 +36,9 @@ zypper --non-interactive install sshpass
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak update
 
+# Install slack and zoom
 flatpak install flathub zoom -y --noninteractive
+flatpak install slack -y --non-interactive
 
 # snapcraft config and slack install
 read -p 'Leap or tumbleweed? [leap/tumbleweed] ' WHICH_SUSE
@@ -47,18 +49,14 @@ else
 	SUSE_VERSION_STR=openSUSE_Tumbleweed
 fi
 
-if [[ ${SLACK} = "y" ]]; then
+if [[ ${SNAP} = "y" ]]; then
     zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/${SUSE_VERSION_STR} snappy
     zypper --gpg-auto-import-keys refresh
     zypper dup --from snappy
     zypper --non-interactive install snapd
-
     # add snapd to path
     source /etc/profile
-
     systemctl enable --now snapd
-
-    snap install slack --classic
 fi
 
 
