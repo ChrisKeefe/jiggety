@@ -1,4 +1,6 @@
 #!/bin/sh
+# Sets terminal to vim mode
+printf "set -o vi\n" >> ~/.bashrc
 
 UUID=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d \')
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${UUID}/ background-color 'rgb(0,43,54)'
