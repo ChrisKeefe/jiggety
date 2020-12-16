@@ -64,13 +64,11 @@ if [[ "$CONFIG" == "y" ]]; then
 	# back up .bashrc
 	cp ~/.bashrc ~/.bashrc_old
 
-	# TODO: edit .bashrc PS1 variable to display git branch
-
-#	Conda appears to set a git prompt by default now:
-#	sed -i 's/($debian_chroot)}/($debian_chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
+	# edit .bashrc PS1 variable to display git branch
+	# Final product should look like this: PS1='\[$(ppwd)\]\u@\h:\w$(__git_ps1)> '
+	printf "\\nPS1='\\[\$(ppwd)\\]\\u@\\h:\\w\$(__git_ps1)> '\n" >> ~/.bashrc
 
 	# symlink bash_aliases and source them in .bash_rc
-	# NOTE: must be non-root
 	if [ -f ~/.bash_aliases ]; then
 	  echo ".bash_aliases already exists. backing it up at .bash_aliases_old"
 	  mv ~/.bash_aliases ~/.bash_aliases_old
