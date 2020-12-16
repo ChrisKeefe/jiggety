@@ -1,5 +1,4 @@
 #!/bin/bash
-
 PASS=$(sudo cat /usr/local/etc/openconnect/c1)
 PUSH='push'
 
