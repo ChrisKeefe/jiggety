@@ -78,6 +78,7 @@ if [[ ${CODE} = "y" ]]; then
     zypper refresh
     zypper --non-interactive install code
     # TODO: vscode config (incl turning off telemetry)
+    code --install-extension vscodevim.vim
 fi
 
 # Hacky lightweight yEd install
