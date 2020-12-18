@@ -3,6 +3,7 @@
     "telemetry.enableCrashReporter": false,
     "vim.enableNeovim": true,
     "vim.neovimPath": "/usr/bin/nvim",
+    "vim.handleKeys": { "<C-b>": false },
     "editor.tabCompletion": "on",
     "editor.minimap.enabled": false,
     "editor.rulers": [80],
