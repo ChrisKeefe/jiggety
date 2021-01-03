@@ -2,6 +2,9 @@
 alias cozy='vim ~/src/jiggety/dotfiles/aliases'
 alias cozyup='source ~/.bash_aliases'
 
+# Navigate to Jiggety dir
+alias jig='cd ~/src/jiggety'
+
 # Use nvim instead of vim
 alias vim='nvim'
 
