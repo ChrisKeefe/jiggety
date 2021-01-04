@@ -19,6 +19,7 @@ sudo zypper update
 
 read -p "Install LaTeX and Beamer Poster dependencies? [y/n] " LaTeX
 read -p "Install Snap (requires snapd and will prompt for pw)? [y/n] " SNAP
+read -p "Install Skype? [y/n] " SKYPE
 read -p "Install Discord? [y/n] " DISCORD
 read -p "Install VSCode? [y/n] " CODE
 read -p "Keep it simple, or try to install yEd? [simple/yed] " YED
@@ -58,6 +59,11 @@ if [[ ${SNAP} = "y" ]]; then
     systemctl enable --now snapd
 fi
 
+if [[ ${SKYPE} = "y" ]]; then
+    zypper addrepo https://repo.skype.com/rpm/stable/skype-stable.repo
+    zypper update
+    zypper --non-interactive install skypeforlinux
+fi
 
 if [[ ${LaTeX} = "y" ]]; then
     zypper --non-interactive install texlive
