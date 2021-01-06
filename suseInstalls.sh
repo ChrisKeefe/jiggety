@@ -98,7 +98,7 @@ zypper --non-interactive install clementine
 zypper --non-interactive install chromium
 zypper --non-interactive in htop
 zypper --non-interactive in neovim
-zypper --non-interactive in shotwell
+zypper --non-interactive in variety
 flatpak install flathub com.github.alainm23.planner
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 pip install flake8
