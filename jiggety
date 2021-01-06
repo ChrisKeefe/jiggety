@@ -98,4 +98,11 @@ if [[ "$CONFIG" == "y" ]]; then
 	  cp ~/.config/Code/User/keybindings.json ~/.config/Code/User/keybindings_bkp.json
 	  ln -sf ~/src/jiggety/dotfiles/vsc_keybindings.json ~/.config/Code/User/keybindings.json
 	fi
+
+	#symlink variety settings
+	if [ -f ~/.config/variety/variety.conf ]; then
+	  echo "variety.config already exists. backing it up"
+	  mv ~/.config/variety/variety.conf ~/.config/variety/variety.conf.bkp
+	fi
+	ln -s ~/src/jiggety/dotfiles/variety.conf ~/.config/variety/variety.conf
 fi
