@@ -1,6 +1,8 @@
 #!/bin/bash
 # Configure openSUSE
 
+printf "Current hostname: "
+echo $(hostname)
 read -p 'Would you like to rename this computer? openSUSE ships with hostname=NA. [y/n]' RENAME
 
 if [[ "$RENAME" == "y" ]]; then
@@ -8,11 +10,27 @@ if [[ "$RENAME" == "y" ]]; then
 	sudo hostnamectl set-hostname $SWEET_NAME_HERE
 fi
 
+read -p "Install Pop-shell for window tiling? [y/n] " POP_SHELL
 read -p 'Install all standard productivity software? [y/n] ' INSTALL
 read -p 'Install Miniconda and QIIME 2? [y/n] ' QIIME
 read -p 'Clone all of your github repos? [y/n] ' SCRAPE_GH
 read -p 'Configure Terminal, bash, git, and vim? [y/n] ' CONFIG
-read -p 'Add mint background images and filter out the bad ones? [y/n]' BGROUND
+
+if [[ ${POP_SHELL} = "y" ]]; then
+  if ! command -v gnome-exensions > /dev/null; then
+	sudo zypper --non-interactive install gnome-extensions
+	echo "gnome-extensions requires a shell restart or reboot. Wayland can't preserve state over restart.\n Re-run jiggety after restart to continue installation."
+	exit 0;
+  fi
+
+  git clone git@github.com:pop-os/shell.git ~/src
+  cd ~/src/shell
+  make local-install
+
+  # NOTE: If this fails to actually configure pop-shell keybindings, running the config script should do it:
+  # sudo snapper create --description "before pop shell shortcuts manual config"
+  # bash ~/src/shell/scripts/configure.sh
+fi
 
 if [[ "$INSTALL" == "y" ]]; then
 	# install packman and codecs for video applications. required for vlc install in suseInstalls.sh
@@ -46,13 +64,11 @@ if [[ "$CONFIG" == "y" ]]; then
 	# back up .bashrc
 	cp ~/.bashrc ~/.bashrc_old
 
-	# TODO: edit .bashrc PS1 variable to display git branch
-
-#	Conda appears to set a git prompt by default now:
-#	sed -i 's/($debian_chroot)}/($debian_chroot)}$(__git_ps1 "(%s)")/g' ~/.bashrc
+	# edit .bashrc PS1 variable to display git branch
+	# Final product should look like this: PS1='\[$(ppwd)\]\u@\h:\w$(__git_ps1)> '
+	printf "\\nPS1='\\[\$(ppwd)\\]\\u@\\h:\\w\$(__git_ps1)> '\n" >> ~/.bashrc
 
 	# symlink bash_aliases and source them in .bash_rc
-	# NOTE: must be non-root
 	if [ -f ~/.bash_aliases ]; then
 	  echo ".bash_aliases already exists. backing it up at .bash_aliases_old"
 	  mv ~/.bash_aliases ~/.bash_aliases_old
@@ -69,10 +85,24 @@ if [[ "$CONFIG" == "y" ]]; then
 	ln -s ~/src/jiggety/dotfiles/gitconfig ~/.gitconfig
 
 	# Write NeoVim config to "nvimrc"
+	mkdir ~/.config/nvim
 	cat ~/src/jiggety/dotfiles/init.vim >> ~/.config/nvim/init.vim
-fi
+	read -p "Open nvim and type :VundleInstall. [Enter to continue] " DUMMY
 
-if [[ "$BGROUND" == "y" ]]; then
-	bash ~/src/jiggety/backgroundSlideshow.sh
-fi
+	# symlink vscode settings and keybinds to jiggety
+	read -p "Overwrite VSCode settings and keybinds with dotfiles? [y/n]' VSCODE
+	if [[ "$VSCODE" == "y" ]]; then
+	  cp ~/.config/Code/User/settings.json ~/.config/Code/User/settings_bkp.json
+	  ln -sf ~/src/jiggety/dotfiles/vsc_settings.json ~/.config/Code/User/settings.json
 
+	  cp ~/.config/Code/User/keybindings.json ~/.config/Code/User/keybindings_bkp.json
+	  ln -sf ~/src/jiggety/dotfiles/vsc_keybindings.json ~/.config/Code/User/keybindings.json
+	fi
+
+	#symlink variety settings
+	if [ -f ~/.config/variety/variety.conf ]; then
+	  echo "variety.config already exists. backing it up"
+	  mv ~/.config/variety/variety.conf ~/.config/variety/variety.conf.bkp
+	fi
+	ln -s ~/src/jiggety/dotfiles/variety.conf ~/.config/variety/variety.conf
+fi

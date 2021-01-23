@@ -14,17 +14,16 @@ sudo zypper update
 # TODO: Install
 # both printers (attached, move into /etc/cups/ppd, set root as owner)
 # Install R and relevant packages (ggplot2, dplyr, etc)
-# music and video players (clementine? vlc?)
 # inkscape? yed?
 # tree
-# vim and vim config
-# vscode
 
 read -p "Install LaTeX and Beamer Poster dependencies? [y/n] " LaTeX
-read -p "Install Slack (requires snapd and will prompt for pw)? [y/n] " SLACK
+read -p "Install Snap (requires snapd and will prompt for pw)? [y/n] " SNAP
+read -p "Install Skype? [y/n] " SKYPE
 read -p "Install Discord? [y/n] " DISCORD
 read -p "Install VSCode? [y/n] " CODE
 read -p "Keep it simple, or try to install yEd? [simple/yed] " YED
+
 
 sudo -s <<EOF
 
@@ -37,23 +36,34 @@ zypper --non-interactive install sshpass
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak update
 
+# Install slack and zoom
 flatpak install flathub zoom -y --noninteractive
+flatpak install slack -y --non-interactive
 
 # snapcraft config and slack install
-if [[ ${SLACK} = "y" ]]; then
-    zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/openSUSE_Leap_15.2 snappy
+read -p 'Leap or tumbleweed? [leap/tumbleweed] ' WHICH_SUSE
+if [[ "$WHICH_SUSE" == "leap" ]]; then
+	read -p 'What version number? [e.g. 15.0] ' SUSE_VERSION_NUMBER
+	SUSE_VERSION_STR=openSUSE_Leap_${SUSE_VERSION_NUMBER}
+else
+	SUSE_VERSION_STR=openSUSE_Tumbleweed
+fi
+
+if [[ ${SNAP} = "y" ]]; then
+    zypper addrepo --refresh https://download.opensuse.org/repositories/system:/snappy/${SUSE_VERSION_STR} snappy
     zypper --gpg-auto-import-keys refresh
     zypper dup --from snappy
     zypper --non-interactive install snapd
-
     # add snapd to path
     source /etc/profile
-
     systemctl enable --now snapd
-
-    snap install slack --classic
 fi
 
+if [[ ${SKYPE} = "y" ]]; then
+    zypper addrepo https://repo.skype.com/rpm/stable/skype-stable.repo
+    zypper update
+    zypper --non-interactive install skypeforlinux
+fi
 
 if [[ ${LaTeX} = "y" ]]; then
     zypper --non-interactive install texlive
@@ -74,7 +84,13 @@ if [[ ${CODE} = "y" ]]; then
     zypper refresh
     zypper --non-interactive install code
     # TODO: vscode config (incl turning off telemetry)
+    code --install-extension vscodevim.vim
 fi
+
+# Install GH CLI
+zypper addrepo https://cli.github.com/packages/rpm/gh-cli.repo
+zypper ref
+zypper install gh
 
 # Hacky lightweight yEd install
 if [[ ${YED} = "yed" ]]; then
@@ -83,8 +99,13 @@ fi
 
 # optional software
 zypper --non-interactive install vlc  
+zypper --non-interactive install clementine
 zypper --non-interactive install chromium
 zypper --non-interactive in htop
+zypper --non-interactive in neovim
+zypper --non-interactive in variety
+flatpak install flathub com.github.alainm23.planner
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 pip install flake8
 EOF
 
