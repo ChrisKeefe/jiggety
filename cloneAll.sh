@@ -1,7 +1,9 @@
 #!/bin/sh
-# This script is somewhat fragile, so no set -e
-# With set -e, it halts on l17, presumably when jq returns a nonzero exit code
-read -p "What is your GH username? " UNAME
+set -e
+
+# TODO: segregate q2 repos into separate subdir
+printf "What is your GH username?"
+read UNAME
 ORG="qiime2"
 export ORG
 INSTALL_DIR="$HOME/src"
@@ -11,20 +13,23 @@ ORGDIR="$HOME/src/${ORG}org"
 export ORGDIR
 
 if [[ ! -f ~/src/${ORGDIR} ]]; then
-	mkdir ${ORGDIR}
+	mkdir ~/src/${ORGDIR}
 fi
 
+# TODO: can this line be deleted?
 cd $INSTALL_DIR
 USER_JSON=$(curl -s "https://${GHTKN}:@api.github.com/users/${UNAME}/repos?per_page=200")
-SSH_URLS=$(echo $USER_JSON | jq .[].ssh_url || true; echo "Success" )
+SSH_URLS=$(echo $USER_JSON | jq .[].ssh_url)
 echo $SSH_URLS | xargs -n 1 git clone
-
-printf "\nClone completed\n"
+# TODO: can this line be deleted?
+cd ${INSTALL_DIR}/jiggety
 
 ORG_JSON=$(curl -s "https://${GHTKN}:@api.github.com/orgs/${ORG}/repos?per_page=200")
 ORG_REPO_NAMES=$(echo $ORG_JSON | jq .[].name)
 
-echo $ORG_REPO_NAMES
+# TODO: can this line be deleted?
+cd $INSTALL_DIR
+
 # Takes a list of repo names from an org ( or maybe a user ) and segregates them into an org folder
 # Must be called from within the directory containing listed repositories
 move_repos () {
@@ -42,26 +47,23 @@ add_upstream_remote () {
 		cd $1
 		git remote add qiime2 "https://github.com/${ORG}/$1"
 		git remote -v
+		cd ${INSTALL_DIR}
 	fi
-	cd ${INSTALL_DIR}
 }
 export -f add_upstream_remote
 
-printf "\nFunctions defined/exported\n"
 # NOTE: This currently segregates and adds upstream remotes ONLY for $ORG repos (qiime2 in this case).
-# TODO: Add upstream remotes for all user repos (where upstream repos exist)
+# TODO: Refactor to add upstream remotes for all user repos (where upstream repos exist)
 # Consider API calls to individual repos
 # (e.g. https://stackoverflow.com/questions/18580913/github-api-for-a-forked-repository-object-how-to-get-what-repository-its-fork)
-cd $INSTALL_DIR
 echo $ORG_REPO_NAMES | xargs -n 1 bash -c 'move_repos "$@"' _
-printf "\nRepos moved\n"
 echo $ORG_REPO_NAMES | xargs -n 1 bash -c 'add_upstream_remote "$@"' _
-printf "\nRemotes added\n"
 
 # Rename aliased org_dir to original org name
 mv ${ORGDIR} $HOME/src/${ORG}
+ORGDIR="$HOME/src/${ORG}org"
+echo ORGDIR
 
-# Return to jiggety directory
 cd ${INSTALL_DIR}/jiggety 
 
 
@@ -71,8 +73,8 @@ del_upstream_remote () {
 		cd $1
 		git remote remove qiime2
 		git remote -v
+		cd ${INSTALL_DIR}
 	fi
-	cd ${INSTALL_DIR}
 }
 
 # echo $ORG_REPO_NAMES | xargs -n 1 bash -c 'del_upstream_remote "$@"' _

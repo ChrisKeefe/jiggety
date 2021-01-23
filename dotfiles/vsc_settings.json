@@ -1,14 +1,12 @@
 {
-    "telemetry.enableTelemetry": false,
+    "telemetry.enableTelemetry": false,
     "telemetry.enableCrashReporter": false,
     "vim.enableNeovim": true,
     "vim.neovimPath": "/usr/bin/nvim",
-    "vim.handleKeys": { "<C-b>": false },
     "editor.tabCompletion": "on",
     "editor.minimap.enabled": false,
     "editor.rulers": [80],
-    "window.zoomLevel": 2,
-    "workbench.startupEditor": "newUntitledFile",
-    "keyboard.dispatch": "keyCode"
+    "window.zoomLevel": 0,
+    "workbench.startupEditor": "newUntitledFile"
 }
 

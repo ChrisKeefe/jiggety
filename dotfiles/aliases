@@ -1,13 +1,3 @@
-# Edit this file
-alias cozy='vim ~/src/jiggety/dotfiles/aliases'
-alias cozyup='source ~/.bash_aliases'
-
-# Navigate to Jiggety dir
-alias jig='cd ~/src/jiggety'
-
-# Use nvim instead of vim
-alias vim='nvim'
-
 # rerun last command as sudo
 alias please='sudo $(fc -ln -1)'
 # rerun last command recursively
@@ -51,9 +41,8 @@ alias condeac='conda deactivate'
 alias conlt='conda activate q2-20.11'
 alias condev='conda activate q2-dev'
 
-# log into vpn, monsoon, CEFNS linux server
-alias vpn='bash ~/src/jiggety/scripts/vpn.sh'
-alias limon='bash ~/src/jiggety/scripts/limon.sh'
+# log into monsoon, CEFNS linux server
+alias limon='ssh crk239@monsoon.hpc.nau.edu'
 alias licef='ssh crk239@linux.cefns.nau.edu'
 
 # scp from monsoon into local directory
@@ -68,13 +57,12 @@ alias tns='tmux new-session -s'
 
 # Misc Applications
 alias jn='jupyter notebook'
+alias vpn='sudo openconnect -b nauvpn.nau.edu'
 
 # replace q2-dev environment - assumes q2-dev exists
 bumpdev () {
     set -e
-    if [[ $CONDA_DEFAULT_ENV != '' && $CONDA_DEFAULT_ENV != 'base' ]]; then
-        conda deactivate
-    fi
+    conda deactivate
     conda update conda -y
     conda env remove -n q2-dev -y
     wget https://raw.githubusercontent.com/qiime2/environment-files/master/latest/staging/qiime2-latest-py36-linux-conda.yml
