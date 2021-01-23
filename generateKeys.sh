@@ -6,7 +6,8 @@ set -e
 read -p "What is your github email address? " GHEMAIL
 
 # Generate GH SSH Key
-ssh-keygen -t rsa -b 4096 -C "${GHEMAIL}"
+# NOTE: ~/.ssh/id_rsa fails
+ssh-keygen -t rsa -b 4096 -C "${GHEMAIL}" -f $HOME/.ssh/id_rsa
 
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
@@ -27,3 +28,7 @@ fi
 
 echo "export GHTKN=\"${TMPTOKEN}\"" >> scrpt_vars
 source scrpt_vars
+
+# Update jiggety remote URL so use SSH
+git remote remove origin
+git remote add origin git@github.com:ChrisKeefe/jiggety.git
