@@ -87,6 +87,11 @@ if [[ ${CODE} = "y" ]]; then
     code --install-extension vscodevim.vim
 fi
 
+# Install GH CLI
+zypper addrepo https://cli.github.com/packages/rpm/gh-cli.repo
+zypper ref
+zypper install gh
+
 # Hacky lightweight yEd install
 if [[ ${YED} = "yed" ]]; then
         bash install_yEd.sh
