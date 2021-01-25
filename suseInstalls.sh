@@ -92,6 +92,9 @@ zypper addrepo https://cli.github.com/packages/rpm/gh-cli.repo
 zypper ref
 zypper install gh
 
+# Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 # Hacky lightweight yEd install
 if [[ ${YED} = "yed" ]]; then
         bash install_yEd.sh
