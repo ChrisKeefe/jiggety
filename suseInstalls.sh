@@ -107,6 +107,8 @@ zypper --non-interactive install chromium
 zypper --non-interactive in htop
 zypper --non-interactive in neovim
 zypper --non-interactive in variety
+zypper --non-interactive in inkscape
+flatpak install org.signal.Signal
 flatpak install flathub com.github.alainm23.planner
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 pip install flake8
