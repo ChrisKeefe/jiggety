@@ -108,6 +108,11 @@ zypper --non-interactive in htop
 zypper --non-interactive in neovim
 zypper --non-interactive in variety
 zypper --non-interactive in inkscape
+
+zypper --non-interactive in openmpi4 openmpi4-devel openmpi4-docs
+echo "export PATH=$PATH:/usr/lib64/mpi/gcc/openmpi4/bin" >> ~/.bashrc
+
+# rpm -ql <packagename> will list the files in the package, from which you can get a path
 flatpak install org.signal.Signal
 flatpak install flathub com.github.alainm23.planner
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
