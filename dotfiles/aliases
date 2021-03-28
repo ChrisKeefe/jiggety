@@ -13,6 +13,7 @@ alias please='sudo $(fc -ln -1)'
 # rerun last command recursively
 alias srsly='$(fc -ln -1) -r'
 alias nosrsly='$(fc -ln -1) -rf'
+alias stop='sudo htop'
 
 alias ll='ls -AlFh'
 alias la='ls -A'
@@ -29,6 +30,12 @@ alias cd..="cd .."
 # personal naviagion aliases
 alias cdal='cd ~/data/alzmice'
 alias cdsrc='cd ~/src; l'
+alias cdbio='cd ~/Documents/bio450; l'
+alias cdhpc='cd ~/src/hpc599'
+alias cdh='cd ~'
+alias cdlists='cd ~/src/toomanylinkedlists/lists/src; l'
+alias cdprov='cd ~/src/provenance_py; l'
+alias cdrust='cd ~/src/685Rust/prov_parsing/untropy; l'
 
 # cd into folder and display contents
 cdl () { cd $1; l; }
@@ -48,8 +55,9 @@ mkcd() {
 # Conda environment management
 alias condeac='conda deactivate'
 # TODO: replace conlt env name with variable generated in cloneAll.sh
-alias conlt='conda activate q2-20.11'
+alias conlt='conda activate q2-21.2'
 alias condev='conda activate q2-dev'
+alias conpr='conda activate prov'
 
 # log into vpn, monsoon, CEFNS linux server
 alias vpn='bash ~/src/jiggety/scripts/vpn.sh'
@@ -89,7 +97,13 @@ bumpdev () {
 
 # launch q2-dev environment, navigate to qiime2 folder or repo, make dev, display available branches
 dev () {
-    source activate q2-dev
+    # deterministically put us in nested base>q2-dev env
+    while [[ $CONDA_DEFAULT_ENV != '' ]]; do
+       conda deactivate
+    done
+    conda activate base
+    conda activate q2-dev
+
     cd ~/src/qiime2/$1
     if [ "${1}" == '' ]; then
         printf '** NO REPO ENTERED: NOT IN DEV MODE **\n\n'
