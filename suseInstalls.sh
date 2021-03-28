@@ -68,8 +68,9 @@ fi
 if [[ ${LaTeX} = "y" ]]; then
     zypper --non-interactive install texlive
     # install beamer dependencies
-    zypper --non-interactive install texlive-luatex qrencode
-    # TODO: install fonts
+    zypper --non-interactive install texlive-beamerposter qrencode
+    # install lato font family - raleway is already installed
+    zypper --non-interactive install lato-fonts
 fi
 
 if [[ ${DISCORD} = "y" ]]; then
