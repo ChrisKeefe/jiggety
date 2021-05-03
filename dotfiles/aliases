@@ -93,6 +93,7 @@ bumpdev () {
     conda install nodejs pytest flake8 -y
     pip install pytest-cov
     pip install -r ~/src/qiime2/docs/requirements.txt
+    pip install -r ~/src/qiime2/dev-docs/requirements.txt
     pip install -e ~/src/qiime2/q2lint
 }
 
