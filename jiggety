@@ -86,7 +86,7 @@ if [[ "$CONFIG" == "y" ]]; then
 
 	# Write NeoVim config to "nvimrc"
 	mkdir ~/.config/nvim
-	cat ~/src/jiggety/dotfiles/init.vim >> ~/.config/nvim/init.vim
+	ln -s ~/src/jiggety/dotfiles/init.vim ~/.config/nvim/init.vim
 	read -p "Open nvim and type :VundleInstall. [Enter to continue] " DUMMY
 
 	# symlink vscode settings and keybinds to jiggety

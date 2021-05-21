@@ -35,6 +35,8 @@ Plugin 'VundleVim/Vundle.vim'
 " --------Actual Plugin Installs----------------------
 Plugin 'morhetz/gruvbox'
 Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
