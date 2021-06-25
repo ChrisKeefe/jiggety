@@ -29,6 +29,7 @@ alias cd..="cd .."
 
 # personal naviagion aliases
 alias cdal='cd ~/data/alzmice'
+alias cdil='cd ~/data/alzmice/ileum'
 alias cdsrc='cd ~/src; l'
 alias cdbio='cd ~/Documents/bio450; l'
 alias cdhpc='cd ~/src/hpc599'
@@ -59,6 +60,7 @@ alias condeac='conda deactivate'
 alias conlt='conda activate q2-21.4'
 alias condev='conda activate q2-dev'
 alias conpr='conda activate prov'
+alias conhome='conda activate homesl'
 
 # log into vpn, monsoon, CEFNS linux server
 alias vpn='bash ~/src/jiggety/scripts/vpn.sh'

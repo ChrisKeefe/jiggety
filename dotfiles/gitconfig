@@ -17,3 +17,5 @@
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 [pull]
 	ff = only
+[init]
+	defaultBranch = main
