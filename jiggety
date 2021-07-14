@@ -15,6 +15,7 @@ read -p 'Install all standard productivity software? [y/n] ' INSTALL
 read -p 'Install Miniconda and QIIME 2? [y/n] ' QIIME
 read -p 'Clone all of your github repos? [y/n] ' SCRAPE_GH
 read -p 'Configure Terminal, bash, git, and vim? [y/n] ' CONFIG
+read -p 'Configure printer? [y/n]' PRINT
 
 if [[ ${POP_SHELL} = "y" ]]; then
   if ! command -v gnome-exensions > /dev/null; then
@@ -105,4 +106,16 @@ if [[ "$CONFIG" == "y" ]]; then
 	  mv ~/.config/variety/variety.conf ~/.config/variety/variety.conf.bkp
 	fi
 	ln -s ~/src/jiggety/dotfiles/variety.conf ~/.config/variety/variety.conf
+fi
+
+if [[ "$PRINT" == "y" ]]; then
+	# Firewall configured to reject printer announcements by default
+	# Fix that here so that we can search network printers
+	sudo firewall-cmd --zone=internal --add-service=ipp --permanent
+	sudo firewall-cmd --zone=internal --add-service=mdns --permanent
+
+	# If the above fails to make network-search for printers work, try:
+	# sudo systemctl start cups-browsed
+
+	echo "Firewall configured for printers. Use GUI to configure a printer."
 fi
