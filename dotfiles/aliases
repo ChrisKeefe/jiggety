@@ -127,6 +127,13 @@ dev () {
     fi
 }
 
+updatecode () {
+sudo -s <<EOF
+  zypper refresh
+  zypper update code
+EOF
+}
+
 # Find out what is taking so much space on your drives!
 # c/o gyaresu on SE Serverfault
 alias diskspace="du -S | sort -n -r |more"
