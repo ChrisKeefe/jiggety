@@ -68,8 +68,9 @@ fi
 if [[ ${LaTeX} = "y" ]]; then
     zypper --non-interactive install texlive
     # install beamer dependencies
-    zypper --non-interactive install texlive-luatex qrencode
-    # TODO: install fonts
+    zypper --non-interactive install texlive-beamerposter qrencode
+    # install lato font family - raleway is already installed
+    zypper --non-interactive install lato-fonts
 fi
 
 if [[ ${DISCORD} = "y" ]]; then
@@ -92,6 +93,9 @@ zypper addrepo https://cli.github.com/packages/rpm/gh-cli.repo
 zypper ref
 zypper install gh
 
+# Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 # Hacky lightweight yEd install
 if [[ ${YED} = "yed" ]]; then
         bash install_yEd.sh
@@ -104,6 +108,15 @@ zypper --non-interactive install chromium
 zypper --non-interactive in htop
 zypper --non-interactive in neovim
 zypper --non-interactive in variety
+zypper --non-interactive in inkscape
+zypper --non-interactive in openmpi4 openmpi4-devel openmpi4-docs
+echo "export PATH=$PATH:/usr/lib64/mpi/gcc/openmpi4/bin" >> ~/.bashrc
+
+# misc cleanup
+zypper --non-interactive remove xterm
+
+# rpm -ql <packagename> will list the files in the package, from which you can get a path
+flatpak install org.signal.Signal
 flatpak install flathub com.github.alainm23.planner
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 pip install flake8

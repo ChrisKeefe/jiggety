@@ -7,8 +7,15 @@
     "editor.tabCompletion": "on",
     "editor.minimap.enabled": false,
     "editor.rulers": [80],
-    "window.zoomLevel": 2,
+    "window.zoomLevel": 1,
     "workbench.startupEditor": "newUntitledFile",
-    "keyboard.dispatch": "keyCode"
+    "keyboard.dispatch": "keyCode",
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter-notebook",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "python.analysis.autoImportCompletions": false,
 }
 

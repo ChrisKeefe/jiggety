@@ -13,6 +13,7 @@ alias please='sudo $(fc -ln -1)'
 # rerun last command recursively
 alias srsly='$(fc -ln -1) -r'
 alias nosrsly='$(fc -ln -1) -rf'
+alias stop='sudo htop'
 
 alias ll='ls -AlFh'
 alias la='ls -A'
@@ -28,7 +29,15 @@ alias cd..="cd .."
 
 # personal naviagion aliases
 alias cdal='cd ~/data/alzmice'
+alias cdil='cd ~/data/alzmice/ileum'
 alias cdsrc='cd ~/src; l'
+alias cdbio='cd ~/Documents/bio450; l'
+alias cdhpc='cd ~/src/hpc599'
+alias cdh='cd ~'
+alias cdlists='cd ~/src/toomanylinkedlists/lists/src; l'
+alias cdrust='cd ~/src/685Rust/prov_parsing/untropy; l'
+alias cdpost='cd ~/src/urdea-poster; l'
+alias cdpr='cd ~/src/provenance_py; conpr; l'
 
 # cd into folder and display contents
 cdl () { cd $1; l; }
@@ -48,8 +57,10 @@ mkcd() {
 # Conda environment management
 alias condeac='conda deactivate'
 # TODO: replace conlt env name with variable generated in cloneAll.sh
-alias conlt='conda activate q2-20.11'
+alias conlt='conda activate q2-21.8'
 alias condev='conda activate q2-dev'
+alias conpr='conda activate prov'
+alias conhome='conda activate homesl'
 
 # log into vpn, monsoon, CEFNS linux server
 alias vpn='bash ~/src/jiggety/scripts/vpn.sh'
@@ -68,28 +79,36 @@ alias tns='tmux new-session -s'
 
 # Misc Applications
 alias jn='jupyter notebook'
+alias flake8='clear; flake8'
 
 # replace q2-dev environment - assumes q2-dev exists
 bumpdev () {
     set -e
-    if [[ $CONDA_DEFAULT_ENV != '' && $CONDA_DEFAULT_ENV != 'base' ]]; then
+    while [[ $CONDA_DEFAULT_ENV != '' && $CONDA_DEFAULT_ENV != 'base' ]]; do
         conda deactivate
-    fi
+    done
     conda update conda -y
     conda env remove -n q2-dev -y
-    wget https://raw.githubusercontent.com/qiime2/environment-files/master/latest/staging/qiime2-latest-py36-linux-conda.yml
-    conda env create -n q2-dev --file qiime2-latest-py36-linux-conda.yml
-    rm qiime2-latest-py36-linux-conda.yml
+    wget https://raw.githubusercontent.com/qiime2/environment-files/master/latest/staging/qiime2-latest-py38-linux-conda.yml
+    conda env create -n q2-dev --file qiime2-latest-py38-linux-conda.yml
+    rm qiime2-latest-py38-linux-conda.yml
     conda activate q2-dev
     conda install nodejs pytest flake8 -y
     pip install pytest-cov
     pip install -r ~/src/qiime2/docs/requirements.txt
+    pip install -r ~/src/qiime2/dev-docs/requirements.txt
     pip install -e ~/src/qiime2/q2lint
 }
 
 # launch q2-dev environment, navigate to qiime2 folder or repo, make dev, display available branches
 dev () {
-    source activate q2-dev
+    # deterministically put us in nested base>q2-dev env
+    while [[ $CONDA_DEFAULT_ENV != '' ]]; do
+       conda deactivate
+    done
+    conda activate base
+    conda activate q2-dev
+
     cd ~/src/qiime2/$1
     if [ "${1}" == '' ]; then
         printf '** NO REPO ENTERED: NOT IN DEV MODE **\n\n'
@@ -107,6 +126,13 @@ dev () {
 	cd ~/src/qiime2/
 	ll
     fi
+}
+
+updatecode () {
+sudo -s <<EOF
+  zypper refresh
+  zypper update code
+EOF
 }
 
 # Find out what is taking so much space on your drives!

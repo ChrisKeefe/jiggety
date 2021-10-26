@@ -1,3 +1,4 @@
 # VSCode env files
 .vscode/*
+*/.vscode/*
 *.code-workspace
