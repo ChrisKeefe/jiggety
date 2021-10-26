@@ -15,7 +15,7 @@ Workstation config scripts for openSUSE that make you feel home again and happy.
 
 ## To Contribute: 
 - Open an issue describing the feature you would like to add.
-  These are my personal config scripts, and features I am not intersted in should remain in your fork.
+  These are my personal config scripts, and features I am not interested in should remain in your fork.
 - Major features should be added as independent bash scripts,
   with the option to run/not run exposed in the main runner script `jiggety`
 - Minor features may be added to relevant existing scripts,
