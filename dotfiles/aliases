@@ -35,9 +35,9 @@ alias cdbio='cd ~/Documents/bio450; l'
 alias cdhpc='cd ~/src/hpc599'
 alias cdh='cd ~'
 alias cdlists='cd ~/src/toomanylinkedlists/lists/src; l'
-alias cdprov='cd ~/src/provenance_py; l'
 alias cdrust='cd ~/src/685Rust/prov_parsing/untropy; l'
 alias cdpost='cd ~/src/urdea-poster; l'
+alias cdpr='cd ~/src/provenance_py; conpr; l'
 
 # cd into folder and display contents
 cdl () { cd $1; l; }
@@ -57,7 +57,7 @@ mkcd() {
 # Conda environment management
 alias condeac='conda deactivate'
 # TODO: replace conlt env name with variable generated in cloneAll.sh
-alias conlt='conda activate q2-21.4'
+alias conlt='conda activate q2-21.8'
 alias condev='conda activate q2-dev'
 alias conpr='conda activate prov'
 alias conhome='conda activate homesl'
@@ -79,6 +79,7 @@ alias tns='tmux new-session -s'
 
 # Misc Applications
 alias jn='jupyter notebook'
+alias flake8='clear; flake8'
 
 # replace q2-dev environment - assumes q2-dev exists
 bumpdev () {
