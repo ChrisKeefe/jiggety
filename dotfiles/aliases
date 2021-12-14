@@ -57,10 +57,13 @@ mkcd() {
 # Conda environment management
 alias condeac='conda deactivate'
 # TODO: replace conlt env name with variable generated in cloneAll.sh
-alias conlt='conda activate q2-21.8'
+alias conlt='conda activate q2-21.11'
 alias condev='conda activate q2-dev'
 alias conpr='conda activate prov'
 alias conhome='conda activate homesl'
+
+# adapted from https://blog.rtwilson.com/conda-revisions-letting-you-rollback-to-a-previous-version-of-your-environment
+alias conhist="cat \${CONDA_PREFIX}/conda-meta/history | grep '# cmd' | cut -d' ' -f3-"
 
 # log into vpn, monsoon, CEFNS linux server
 alias vpn='bash ~/src/jiggety/scripts/vpn.sh'
