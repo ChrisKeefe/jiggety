@@ -81,6 +81,11 @@ alias tns='tmux new-session -s'
 alias jn='jupyter notebook'
 alias flake8='clear; flake8'
 
+# Flatpak Applications
+alias signal='org.signal.Signal'
+alias zoom='us.zoom.Zoom'
+alias slack='com.slack.Slack'
+
 # replace q2-dev environment - assumes q2-dev exists
 bumpdev () {
     set -e

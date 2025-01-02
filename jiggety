@@ -78,6 +78,9 @@ if [[ "$CONFIG" == "y" ]]; then
 	printf '\n# added by jiggety:\n' >> ~/.bashrc
 	printf '%s\n    %s\n%s\n' 'if [ -f ~/.bash_aliases ]; then' 'source ~/.bash_aliases' 'fi' >> ~/.bashrc
 
+	printf '\n# added by jiggety:\n' >> ~/.profile
+	printf '\nPATH="${PATH:+${PATH}:}/var/lib/flatpak/exports/bin"' >> ~/.profile
+
 	# symlink git aliases
 	if [ -f ~/.gitconfig ]; then
 	  echo ".gitconfig already exists. backing it up at .gitconfig_old"
