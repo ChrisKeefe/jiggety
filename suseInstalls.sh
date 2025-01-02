@@ -37,8 +37,8 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 flatpak update
 
 # Install slack and zoom
-flatpak install flathub zoom -y --noninteractive
-flatpak install slack -y --non-interactive
+flatpak install flathub us.zoom.Zoom -y
+flatpak install com.slack.Slack -y
 
 # snapcraft config and slack install
 read -p 'Leap or tumbleweed? [leap/tumbleweed] ' WHICH_SUSE

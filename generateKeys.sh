@@ -5,17 +5,20 @@ set -e
 
 read -p "What is your github email address? " GHEMAIL
 
+# TODO: Drop this block? PW-based clone doesn't work any more,
+# so I think we can assume this will already be done.
+# Plus, GH has moved on to a different encryption algo
 # Generate GH SSH Key
 # NOTE: ~/.ssh/id_rsa fails
-ssh-keygen -t rsa -b 4096 -C "${GHEMAIL}" -f $HOME/.ssh/id_rsa
-
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
-
-xclip -sel clip < ~/.ssh/id_rsa.pub
-
-printf "Your new SSH Key has been added to your clipboard."
-read -p "Press enter once you have added your SSH Key to your Github account. "
+# ssh-keygen -t rsa -b 4096 -C "${GHEMAIL}" -f $HOME/.ssh/id_rsa
+# 
+# eval "$(ssh-agent -s)"
+# ssh-add ~/.ssh/id_rsa
+# 
+# xclip -sel clip < ~/.ssh/id_rsa.pub
+# 
+# printf "Your new SSH Key has been added to your clipboard."
+# read -p "Press enter once you have added your SSH Key to your Github account. "
 
 
 # Add GitHub API token to global environment
