@@ -85,6 +85,7 @@ alias flake8='clear; flake8'
 alias signal='org.signal.Signal'
 alias zoom='us.zoom.Zoom'
 alias slack='com.slack.Slack'
+alias code='com.visualstudio.code'
 
 # replace q2-dev environment - assumes q2-dev exists
 bumpdev () {

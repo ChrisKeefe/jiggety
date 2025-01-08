@@ -17,6 +17,7 @@ sudo zypper update
 # inkscape? yed?
 # tree
 
+read -p "Install Ruby and Jekyll for github pages? [y/n] " JEKYLL
 read -p "Install LaTeX and Beamer Poster dependencies? [y/n] " LaTeX
 read -p "Install Snap (requires snapd and will prompt for pw)? [y/n] " SNAP
 read -p "Install Skype? [y/n] " SKYPE
@@ -32,6 +33,9 @@ zypper --non-interactive install jq
 zypper --non-interactive install sshpass
 # xclip is pre-installed with this SUSE config
 
+# Covers GCC/G++, Make, and a bunch of other core dev tools
+sudo zypper install -t pattern devel_basis
+
 # Configure pre-installed flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak update
@@ -39,6 +43,10 @@ flatpak update
 # Install slack and zoom
 flatpak install flathub us.zoom.Zoom -y
 flatpak install com.slack.Slack -y
+
+if [[ ${JEKYLL} = "y" ]]; then
+    bash installJekyll.sh
+fi
 
 # snapcraft config and slack install
 read -p 'Leap or tumbleweed? [leap/tumbleweed] ' WHICH_SUSE
