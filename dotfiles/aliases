@@ -87,6 +87,28 @@ alias zoom='us.zoom.Zoom'
 alias slack='com.slack.Slack'
 alias code='com.visualstudio.code'
 
+# Update aliases
+alias signalUpdate='flatpak update org.signal.Signal'
+
+diff_directory_filenames_and_sizes() {
+  # Usage: diff_directory_filenames_and_sizes <source_dir> <dest_dir> [output_file]
+  local src="$1"
+  local dst="$2"
+  local outfile="${3:-archiveDiff.txt}" # Default to 'archiveDiff.txt' if not provided
+
+  # when passed absolute filepaths, find renders absolute filepaths
+  # a useful diff across two directories must drop the filepath prefix or all find output lines will differ
+  # -printf lets us output the filesize and the "file's name with the name of the starting-point under which it was found removed"
+
+  diff \
+    <(find "$src" -type f -printf '%s %P\n' | sort) \
+    <(find "$dst" -type f -printf '%s %P\n' | sort) \
+    > "$outfile"
+}
+
+alias diff_archive="diff_directory_filenames_and_sizes"
+
+
 # replace q2-dev environment - assumes q2-dev exists
 bumpdev () {
     set -e
